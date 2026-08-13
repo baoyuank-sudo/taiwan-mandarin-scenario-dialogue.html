@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>華語情境對話與語法學習平台 (TOCFL A1-B1)</title>
+<style>
+:root{--primary:#007AFF;--primary-light:#EEF6FF;--secondary:#34C759;--accent:#FF9500;--bg:#F4F7F9;--card-bg:#FFFFFF;--text-main:#2C3E50;--text-sub:#5F6C7B;--border:#E0E6ED}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC",sans-serif;background:var(--bg);color:var(--text-main);margin:0;padding:16px;display:flex;justify-content:center}
+.container{max-width:960px;width:100%}
+header{text-align:center;margin-bottom:16px}
+h1{color:var(--primary);font-size:1.7rem;margin-bottom:6px}
+.pyramid-nav{background:var(--card-bg);padding:16px 18px;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,.05);margin-bottom:18px}
+.pyramid-level{margin-bottom:10px}
+.pyramid-title{font-weight:bold;color:var(--primary);margin-bottom:8px;font-size:.95rem}
+.tag-group{display:flex;flex-wrap:wrap;gap:7px}
+.scene-tag,.sub-tag{background:var(--primary-light);color:var(--primary);padding:6px 12px;border-radius:20px;font-size:.88rem;cursor:pointer;border:1px solid transparent;transition:all .2s;user-select:none}
+.scene-tag:hover,.scene-tag.active,.sub-tag:hover,.sub-tag.active{background:var(--primary);color:#fff}
+.sub-nav{margin-top:12px;padding-top:12px;border-top:1px dashed var(--border);display:none}
+.sub-nav.show{display:block}
+.sub-title{font-size:.85rem;color:var(--text-sub);margin-bottom:8px}
+.card{background:var(--card-bg);border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+.card-header{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--primary-light);padding-bottom:10px;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.card-title{font-size:1.2rem;font-weight:bold;color:var(--primary)}
+.dialogue-item{margin-bottom:10px;padding:10px;background:#FAFAFA;border-left:4px solid var(--primary);border-radius:4px}
+.dialogue-zh{font-size:1.05rem;font-weight:bold;color:var(--text-main);display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:8px}
+.dialogue-en{font-size:.9rem;color:var(--text-sub);font-style:italic;margin-top:3px}
+.btn{background:var(--primary);color:#fff;border:none;border-radius:20px;padding:7px 14px;font-size:.85rem;font-weight:bold;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .2s}
+.btn:hover{opacity:.9;transform:translateY(-1px)}
+.btn-secondary{background:var(--secondary)}.btn-accent{background:var(--accent)}
+.grammar-box{background:#FFFBEB;border:1px solid #FFE58F;padding:12px;border-radius:10px;margin-bottom:10px}
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:10px}
+.vocab-card{border:1px solid var(--border);border-radius:10px;padding:10px;background:#fff;cursor:pointer;transition:all .2s}
+.vocab-card:hover{border-color:var(--primary);background:var(--primary-light)}
+.vocab-zh{font-weight:bold;font-size:1rem}.vocab-pinyin{color:var(--primary);font-size:.82rem}.vocab-en{color:var(--text-sub);font-size:.78rem}
+.q-box{background:#F8F9FA;padding:12px;border-radius:10px;margin-bottom:10px}
+input[type=text]{width:100%;padding:9px;margin-top:6px;border:1px solid #CCC;border-radius:8px;box-sizing:border-box}
+.coming-soon{text-align:center;padding:36px 16px;color:var(--text-sub);font-size:1.05rem}
+.coming-soon strong{color:var(--accent);display:block;margin-bottom:6px;font-size:1.2rem}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<h1>🇹🇼 華語情境語音對話平台</h1>
+<p style="color:var(--text-sub);margin:0">適合 TOCFL A1–B1 程度外籍學生 · 台灣慣用口語</p>
+</header>
+<div class="pyramid-nav">
+<div class="pyramid-level">
+<div class="pyramid-title">🔺 入門級 (TOCFL A1–A2) 基礎情境</div>
+<div class="tag-group">
+<span class="scene-tag" data-main="dorm" onclick="selectMain('dorm',this)">🏢 宿舍日常生活</span>
+<span class="scene-tag" data-main="campus" onclick="selectMain('campus',this)">🏫 校園課堂與學業</span>
+<span class="scene-tag" data-main="social" onclick="selectMain('social',this)">🍔 校園社交與休閒</span>
+</div>
+</div>
+<div class="pyramid-level" style="margin-top:14px">
+<div class="pyramid-title">🔺 進階級 (TOCFL A2–B1) 實用情境</div>
+<div class="tag-group">
+<span class="scene-tag active" data-main="shopping" onclick="selectMain('shopping',this)">🛒 日常生活與購物</span>
+<span class="scene-tag" data-main="dining" onclick="selectMain('dining',this)">🍽 飲食與餐廳</span>
+<span class="scene-tag" data-main="transport" onclick="selectMain('transport',this)">🚗 交通與旅遊</span>
+<span class="scene-tag" data-main="workplace" onclick="selectMain('workplace',this)">💼 職場與商務</span>
+<span class="scene-tag" data-main="medical" onclick="selectMain('medical',this)">🏥 醫療與公共服務</span>
+<span class="scene-tag" data-main="entertainment" onclick="selectMain('entertainment',this)">🎉 社交與娛樂</span>
+</div>
+</div>
+<div class="sub-nav show" id="subNav">
+<div class="sub-title" id="subTitle">請選擇子場景：</div>
+<div class="tag-group" id="subTags"></div>
+</div>
+</div>
+<div class="card">
+<div class="card-header">
+<span class="card-title" id="moduleTitle">請選擇場景</span>
+<button class="btn btn-secondary" id="btnFullDialogue" onclick="speakFullDialogue()" style="display:none">🔊 聽完整對話</button>
+</div>
+<div id="dialogueList"></div>
+</div>
+<div class="card">
+<div class="card-header"><span class="card-title">💡 實用語法解析（2 個常用句型）</span></div>
+<div id="grammarList"></div>
+</div>
+<div class="card">
+<div class="card-header">
+<span class="card-title">🧠 心智圖關聯生詞（點擊聽發音）</span>
+<button class="btn btn-accent" id="btnVocab" onclick="speakVocabExplanation()" style="display:none">🔊 聽生詞用法解說</button>
+</div>
+<div id="mindmapNote" style="font-size:.92rem;color:var(--text-sub);margin-bottom:10px"></div>
+<div class="vocab-grid" id="vocabGrid"></div>
+</div>
+<div class="card">
+<div class="card-header"><span class="card-title">✍️ 課後趣味問答（3 題）</span></div>
+<div id="quizList"></div>
+<button class="btn" style="width:100%;justify-content:center;margin-top:8px" onclick="alert('回答得很好！請繼續保持練習！')">提交答案</button>
+</div>
+</div>
+<script>
+const mainCategories={
+dorm:{label:"🏢 宿舍日常生活",subs:[
+{key:"dorm_meet",label:"室友初次見面"},{key:"dorm_rules",label:"制定住宿公約"},{key:"dorm_complain",label:"抱怨室友作息"},
+{key:"dorm_bill",label:"分攤宿舍電費"},{key:"dorm_bath",label:"浴室洗澡排隊"},{key:"dorm_laundry",label:"宿舍洗衣服"},
+{key:"dorm_fridge",label:"公共冰箱找食物"},{key:"dorm_inspect",label:"宿舍宿管檢查"},{key:"dorm_chat",label:"深夜宿舍聊天"},
+{key:"dorm_move",label:"搬離宿舍打包"}]},
+campus:{label:"🏫 校園課堂與學業",subs:[
+{key:"campus_course",label:"選課系統搶課"},{key:"campus_add",label:"第一堂課聽加簽"},{key:"campus_group",label:"分組報告找組員"},
+{key:"campus_meeting",label:"小組討論開會"},{key:"campus_ask",label:"課後請教教授"},{key:"campus_notes",label:"期末考前借筆記"},
+{key:"campus_library",label:"圖書館搶座位"},{key:"campus_extend",label:"交報告期限求情"},{key:"campus_office",label:"教授研究室面談"},
+{key:"campus_exam",label:"請學長姐傳承考古題"}]},
+social:{label:"🍔 校園社交與休閒",subs:[
+{key:"social_cafeteria",label:"學生餐廳吃午餐"},{key:"social_club",label:"加入社團博覽會"},{key:"social_welcome",label:"籌辦迎新活動"},
+{key:"social_ball",label:"校園運動場打球"},{key:"social_date",label:"約心儀對象去夜市"},{key:"social_scooter",label:"機車雙載出遊"},
+{key:"social_secondhand",label:"校園二手物買賣"},{key:"social_job",label:"工讀面試諮詢"},{key:"social_future",label:"討論畢業出路"},
+{key:"social_candy",label:"期末歐趴糖祝福"}]},
+shopping:{label:"🛒 日常生活與購物",subs:[
+{key:"shop_market",label:"菜市場買菜"},{key:"shop_tea",label:"手搖飲料店"},{key:"shop_convenience",label:"便利商店"},
+{key:"shop_department",label:"百貨公司"},{key:"shop_supermarket",label:"超級市場"}]},
+dining:{label:"🍽 飲食與餐廳",subs:[
+{key:"dine_stirfry",label:"熱炒店聚餐"},{key:"dine_cafe",label:"咖啡廳下午茶"},{key:"dine_queue",label:"排隊名店"},
+{key:"dine_takeout",label:"餐廳外帶"},{key:"dine_bar",label:"酒吧小酌"}]},
+transport:{label:"🚗 交通與旅遊",subs:[
+{key:"trans_taxi",label:"搭乘計程車"},{key:"trans_train",label:"火車站買票"},{key:"trans_hotel",label:"飯店入住"},
+{key:"trans_askway",label:"路人問路"},{key:"trans_rentcar",label:"租車自駕"}]},
+workplace:{label:"💼 職場與商務",subs:[
+{key:"work_interview",label:"面試自我介紹"},{key:"work_teabar",label:"辦公室茶水間"},{key:"work_meeting",label:"商務會議"},
+{key:"work_phone",label:"接聽客戶電話"},{key:"work_leave",label:"向主管請假"}]},
+medical:{label:"🏥 醫療與公共服務",subs:[
+{key:"med_clinic",label:"診所看醫生"},{key:"med_pharmacy",label:"藥局買藥"},{key:"med_bank",label:"銀行開戶"},
+{key:"med_post",label:"郵局寄件"},{key:"med_hair",label:"理髮店剪髮"}]},
+entertainment:{label:"🎉 社交與娛樂",subs:[
+{key:"ent_gym",label:"健身房運動"},{key:"ent_cinema",label:"電影院買票"},{key:"ent_gather",label:"朋友聚會"},
+{key:"ent_ktv",label:"KTV唱歌"},{key:"ent_neighbor",label:"鄰居打招呼"}]}
+};
+
+const modules = {
+dorm_complain:{title:"抱怨室友作息 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「抱怨室友作息」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下作息的情況。",en:"y"},
+{zh:"B：好，我也注意到作息需要處理。",en:" "},
+{zh:"A：那我們先討論吵，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意睡覺。",en:"t"},
+{zh:"A：好，另外早起也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認音量，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 可以 + 動詞 + 嗎？ (kěyǐ... ma?)",desc:"<strong>使用原則：</strong>禮貌詢問是否可以做某事。",example:"例句：<strong>可以</strong>一起確認<strong>嗎</strong>？"},
+{title:"2. 先 + 動詞，再 + 動詞 (xiān... zài...)",desc:"<strong>使用原則：</strong>說明事情的先後順序。",example:"例句：<strong>先</strong>確認資料，<strong>再</strong>決定。"}
+],
+mindmap:"<strong>心智圖：【抱怨室友作息】</strong><br>情境確認 ➔ 作息 ➔ 吵 ➔ 注意睡覺 ➔ 確認早起 ➔ 完成處理",
+vocab:[
+{zh:"作息",pinyin:"zuòxí",en:"schedule",exp:"和「抱怨室友作息」情境有關的常用詞。例如：我們需要注意作息。"},{zh:"吵",pinyin:"chǎo",en:"noisy",exp:"和「抱怨室友作息」情境有關的常用詞。例如：我們需要注意吵。"},{zh:"睡覺",pinyin:"shuìjiào",en:"sleep",exp:"和「抱怨室友作息」情境有關的常用詞。例如：我們需要注意睡覺。"},{zh:"早起",pinyin:"zǎoqǐ",en:"get up early",exp:"和「抱怨室友作息」情境有關的常用詞。例如：我們需要注意早起。"},{zh:"音量",pinyin:"yīnliàng",en:"volume",exp:"和「抱怨室友作息」情境有關的常用詞。例如：我們需要注意音量。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「抱怨室友作息」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+dorm_bill:{title:"分攤宿舍電費 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「分攤宿舍電費」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下電費的情況。",en:"y"},
+{zh:"B：好，我也注意到電費需要處理。",en:" "},
+{zh:"A：那我們先討論分攤，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意帳單。",en:"t"},
+{zh:"A：好，另外平均也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認金額，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 要不要 + 動詞？ (yào bu yào...)",desc:"<strong>使用原則：</strong>口語提議或詢問對方意願。",example:"例句：<strong>要不要</strong>一起討論？"},
+{title:"2. 如果……就…… (rúguǒ... jiù...)",desc:"<strong>使用原則：</strong>表示條件與結果。",example:"例句：<strong>如果</strong>時間不夠，<strong>就</strong>先處理重要的。"}
+],
+mindmap:"<strong>心智圖：【分攤宿舍電費】</strong><br>情境確認 ➔ 電費 ➔ 分攤 ➔ 注意帳單 ➔ 確認平均 ➔ 完成處理",
+vocab:[
+{zh:"電費",pinyin:"diànfèi",en:"electricity bill",exp:"和「分攤宿舍電費」情境有關的常用詞。例如：我們需要注意電費。"},{zh:"分攤",pinyin:"fēntān",en:"share the cost",exp:"和「分攤宿舍電費」情境有關的常用詞。例如：我們需要注意分攤。"},{zh:"帳單",pinyin:"zhàngdān",en:"bill",exp:"和「分攤宿舍電費」情境有關的常用詞。例如：我們需要注意帳單。"},{zh:"平均",pinyin:"píngjūn",en:"average",exp:"和「分攤宿舍電費」情境有關的常用詞。例如：我們需要注意平均。"},{zh:"金額",pinyin:"jīn'é",en:"amount",exp:"和「分攤宿舍電費」情境有關的常用詞。例如：我們需要注意金額。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「分攤宿舍電費」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+dorm_bath:{title:"浴室洗澡排隊 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「浴室洗澡排隊」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下浴室的情況。",en:"y"},
+{zh:"B：好，我也注意到浴室需要處理。",en:" "},
+{zh:"A：那我們先討論排隊，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意洗澡。",en:"t"},
+{zh:"A：好，另外熱水也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認等一下，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 除了……還…… (chúle... hái...)",desc:"<strong>使用原則：</strong>在原有項目之外再增加內容。",example:"例句：<strong>除了</strong>資料，<strong>還</strong>要確認時間。"},
+{title:"2. 比較 + 形容詞 (bǐjiào...)",desc:"<strong>使用原則：</strong>比較兩種選擇或情況。",example:"例句：這個方法<strong>比較</strong>方便。"}
+],
+mindmap:"<strong>心智圖：【浴室洗澡排隊】</strong><br>情境確認 ➔ 浴室 ➔ 排隊 ➔ 注意洗澡 ➔ 確認熱水 ➔ 完成處理",
+vocab:[
+{zh:"浴室",pinyin:"yùshì",en:"bathroom",exp:"和「浴室洗澡排隊」情境有關的常用詞。例如：我們需要注意浴室。"},{zh:"排隊",pinyin:"páiduì",en:"queue",exp:"和「浴室洗澡排隊」情境有關的常用詞。例如：我們需要注意排隊。"},{zh:"洗澡",pinyin:"xǐzǎo",en:"shower",exp:"和「浴室洗澡排隊」情境有關的常用詞。例如：我們需要注意洗澡。"},{zh:"熱水",pinyin:"rèshuǐ",en:"hot water",exp:"和「浴室洗澡排隊」情境有關的常用詞。例如：我們需要注意熱水。"},{zh:"等一下",pinyin:"děng yíxià",en:"wait a moment",exp:"和「浴室洗澡排隊」情境有關的常用詞。例如：我們需要注意等一下。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「浴室洗澡排隊」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+dorm_fridge:{title:"公共冰箱找食物 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「公共冰箱找食物」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下冰箱的情況。",en:"y"},
+{zh:"B：好，我也注意到冰箱需要處理。",en:" "},
+{zh:"A：那我們先討論便當，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意標籤。",en:"t"},
+{zh:"A：好，另外食物也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認拿錯，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 可以 + 動詞 + 嗎？ (kěyǐ... ma?)",desc:"<strong>使用原則：</strong>禮貌詢問是否可以做某事。",example:"例句：<strong>可以</strong>一起確認<strong>嗎</strong>？"},
+{title:"2. 先 + 動詞，再 + 動詞 (xiān... zài...)",desc:"<strong>使用原則：</strong>說明事情的先後順序。",example:"例句：<strong>先</strong>確認資料，<strong>再</strong>決定。"}
+],
+mindmap:"<strong>心智圖：【公共冰箱找食物】</strong><br>情境確認 ➔ 冰箱 ➔ 便當 ➔ 注意標籤 ➔ 確認食物 ➔ 完成處理",
+vocab:[
+{zh:"冰箱",pinyin:"bīngxiāng",en:"refrigerator",exp:"和「公共冰箱找食物」情境有關的常用詞。例如：我們需要注意冰箱。"},{zh:"便當",pinyin:"biàndāng",en:"boxed meal",exp:"和「公共冰箱找食物」情境有關的常用詞。例如：我們需要注意便當。"},{zh:"標籤",pinyin:"biāoqiān",en:"label",exp:"和「公共冰箱找食物」情境有關的常用詞。例如：我們需要注意標籤。"},{zh:"食物",pinyin:"shíwù",en:"food",exp:"和「公共冰箱找食物」情境有關的常用詞。例如：我們需要注意食物。"},{zh:"拿錯",pinyin:"ná cuò",en:"take the wrong one",exp:"和「公共冰箱找食物」情境有關的常用詞。例如：我們需要注意拿錯。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「公共冰箱找食物」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+dorm_inspect:{title:"宿舍宿管檢查 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「宿舍宿管檢查」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下檢查的情況。",en:"y"},
+{zh:"B：好，我也注意到檢查需要處理。",en:" "},
+{zh:"A：那我們先討論宿管，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意房間。",en:"t"},
+{zh:"A：好，另外整潔也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認通知，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 要不要 + 動詞？ (yào bu yào...)",desc:"<strong>使用原則：</strong>口語提議或詢問對方意願。",example:"例句：<strong>要不要</strong>一起討論？"},
+{title:"2. 如果……就…… (rúguǒ... jiù...)",desc:"<strong>使用原則：</strong>表示條件與結果。",example:"例句：<strong>如果</strong>時間不夠，<strong>就</strong>先處理重要的。"}
+],
+mindmap:"<strong>心智圖：【宿舍宿管檢查】</strong><br>情境確認 ➔ 檢查 ➔ 宿管 ➔ 注意房間 ➔ 確認整潔 ➔ 完成處理",
+vocab:[
+{zh:"檢查",pinyin:"jiǎnchá",en:"inspection",exp:"和「宿舍宿管檢查」情境有關的常用詞。例如：我們需要注意檢查。"},{zh:"宿管",pinyin:"sùguǎn",en:"dorm manager",exp:"和「宿舍宿管檢查」情境有關的常用詞。例如：我們需要注意宿管。"},{zh:"房間",pinyin:"fángjiān",en:"room",exp:"和「宿舍宿管檢查」情境有關的常用詞。例如：我們需要注意房間。"},{zh:"整潔",pinyin:"zhěngjié",en:"tidy",exp:"和「宿舍宿管檢查」情境有關的常用詞。例如：我們需要注意整潔。"},{zh:"通知",pinyin:"tōngzhī",en:"notice",exp:"和「宿舍宿管檢查」情境有關的常用詞。例如：我們需要注意通知。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「宿舍宿管檢查」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+dorm_chat:{title:"深夜宿舍聊天 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「深夜宿舍聊天」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下深夜的情況。",en:"y"},
+{zh:"B：好，我也注意到深夜需要處理。",en:" "},
+{zh:"A：那我們先討論聊天，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意明天。",en:"t"},
+{zh:"A：好，另外小聲也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認睡著，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 除了……還…… (chúle... hái...)",desc:"<strong>使用原則：</strong>在原有項目之外再增加內容。",example:"例句：<strong>除了</strong>資料，<strong>還</strong>要確認時間。"},
+{title:"2. 比較 + 形容詞 (bǐjiào...)",desc:"<strong>使用原則：</strong>比較兩種選擇或情況。",example:"例句：這個方法<strong>比較</strong>方便。"}
+],
+mindmap:"<strong>心智圖：【深夜宿舍聊天】</strong><br>情境確認 ➔ 深夜 ➔ 聊天 ➔ 注意明天 ➔ 確認小聲 ➔ 完成處理",
+vocab:[
+{zh:"深夜",pinyin:"shēnyè",en:"late at night",exp:"和「深夜宿舍聊天」情境有關的常用詞。例如：我們需要注意深夜。"},{zh:"聊天",pinyin:"liáotiān",en:"chat",exp:"和「深夜宿舍聊天」情境有關的常用詞。例如：我們需要注意聊天。"},{zh:"明天",pinyin:"míngtiān",en:"tomorrow",exp:"和「深夜宿舍聊天」情境有關的常用詞。例如：我們需要注意明天。"},{zh:"小聲",pinyin:"xiǎoshēng",en:"quietly",exp:"和「深夜宿舍聊天」情境有關的常用詞。例如：我們需要注意小聲。"},{zh:"睡著",pinyin:"shuìzháo",en:"fall asleep",exp:"和「深夜宿舍聊天」情境有關的常用詞。例如：我們需要注意睡著。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「深夜宿舍聊天」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+dorm_move:{title:"搬離宿舍打包 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「搬離宿舍打包」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下搬離的情況。",en:"y"},
+{zh:"B：好，我也注意到搬離需要處理。",en:" "},
+{zh:"A：那我們先討論打包，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意行李。",en:"t"},
+{zh:"A：好，另外紙箱也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認退宿，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 可以 + 動詞 + 嗎？ (kěyǐ... ma?)",desc:"<strong>使用原則：</strong>禮貌詢問是否可以做某事。",example:"例句：<strong>可以</strong>一起確認<strong>嗎</strong>？"},
+{title:"2. 先 + 動詞，再 + 動詞 (xiān... zài...)",desc:"<strong>使用原則：</strong>說明事情的先後順序。",example:"例句：<strong>先</strong>確認資料，<strong>再</strong>決定。"}
+],
+mindmap:"<strong>心智圖：【搬離宿舍打包】</strong><br>情境確認 ➔ 搬離 ➔ 打包 ➔ 注意行李 ➔ 確認紙箱 ➔ 完成處理",
+vocab:[
+{zh:"搬離",pinyin:"bānlí",en:"move out",exp:"和「搬離宿舍打包」情境有關的常用詞。例如：我們需要注意搬離。"},{zh:"打包",pinyin:"dǎbāo",en:"pack",exp:"和「搬離宿舍打包」情境有關的常用詞。例如：我們需要注意打包。"},{zh:"行李",pinyin:"xíngli",en:"luggage",exp:"和「搬離宿舍打包」情境有關的常用詞。例如：我們需要注意行李。"},{zh:"紙箱",pinyin:"zhǐxiāng",en:"cardboard box",exp:"和「搬離宿舍打包」情境有關的常用詞。例如：我們需要注意紙箱。"},{zh:"退宿",pinyin:"tuìsù",en:"move out of dorm",exp:"和「搬離宿舍打包」情境有關的常用詞。例如：我們需要注意退宿。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「搬離宿舍打包」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+campus_course:{title:"選課系統搶課 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「選課系統搶課」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下選課的情況。",en:"y"},
+{zh:"B：好，我也注意到選課需要處理。",en:" "},
+{zh:"A：那我們先討論系統，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意名額。",en:"t"},
+{zh:"A：好，另外加退選也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認課表，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 要不要 + 動詞？ (yào bu yào...)",desc:"<strong>使用原則：</strong>口語提議或詢問對方意願。",example:"例句：<strong>要不要</strong>一起討論？"},
+{title:"2. 如果……就…… (rúguǒ... jiù...)",desc:"<strong>使用原則：</strong>表示條件與結果。",example:"例句：<strong>如果</strong>時間不夠，<strong>就</strong>先處理重要的。"}
+],
+mindmap:"<strong>心智圖：【選課系統搶課】</strong><br>情境確認 ➔ 選課 ➔ 系統 ➔ 注意名額 ➔ 確認加退選 ➔ 完成處理",
+vocab:[
+{zh:"選課",pinyin:"xuǎnkè",en:"course selection",exp:"和「選課系統搶課」情境有關的常用詞。例如：我們需要注意選課。"},{zh:"系統",pinyin:"xìtǒng",en:"system",exp:"和「選課系統搶課」情境有關的常用詞。例如：我們需要注意系統。"},{zh:"名額",pinyin:"míng'é",en:"quota",exp:"和「選課系統搶課」情境有關的常用詞。例如：我們需要注意名額。"},{zh:"加退選",pinyin:"jiātuìxuǎn",en:"add/drop",exp:"和「選課系統搶課」情境有關的常用詞。例如：我們需要注意加退選。"},{zh:"課表",pinyin:"kèbiǎo",en:"schedule",exp:"和「選課系統搶課」情境有關的常用詞。例如：我們需要注意課表。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「選課系統搶課」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+campus_add:{title:"第一堂課聽加簽 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「第一堂課聽加簽」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下加簽的情況。",en:"y"},
+{zh:"B：好，我也注意到加簽需要處理。",en:" "},
+{zh:"A：那我們先討論名額，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意教授。",en:"t"},
+{zh:"A：好，另外理由也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認簽名，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 除了……還…… (chúle... hái...)",desc:"<strong>使用原則：</strong>在原有項目之外再增加內容。",example:"例句：<strong>除了</strong>資料，<strong>還</strong>要確認時間。"},
+{title:"2. 比較 + 形容詞 (bǐjiào...)",desc:"<strong>使用原則：</strong>比較兩種選擇或情況。",example:"例句：這個方法<strong>比較</strong>方便。"}
+],
+mindmap:"<strong>心智圖：【第一堂課聽加簽】</strong><br>情境確認 ➔ 加簽 ➔ 名額 ➔ 注意教授 ➔ 確認理由 ➔ 完成處理",
+vocab:[
+{zh:"加簽",pinyin:"jiāqiān",en:"course add approval",exp:"和「第一堂課聽加簽」情境有關的常用詞。例如：我們需要注意加簽。"},{zh:"名額",pinyin:"míng'é",en:"quota",exp:"和「第一堂課聽加簽」情境有關的常用詞。例如：我們需要注意名額。"},{zh:"教授",pinyin:"jiàoshòu",en:"professor",exp:"和「第一堂課聽加簽」情境有關的常用詞。例如：我們需要注意教授。"},{zh:"理由",pinyin:"lǐyóu",en:"reason",exp:"和「第一堂課聽加簽」情境有關的常用詞。例如：我們需要注意理由。"},{zh:"簽名",pinyin:"qiānmíng",en:"signature",exp:"和「第一堂課聽加簽」情境有關的常用詞。例如：我們需要注意簽名。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「第一堂課聽加簽」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+campus_meeting:{title:"小組討論開會 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「小組討論開會」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下討論的情況。",en:"y"},
+{zh:"B：好，我也注意到討論需要處理。",en:" "},
+{zh:"A：那我們先討論分工，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意資料。",en:"t"},
+{zh:"A：好，另外進度也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認截止日，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 可以 + 動詞 + 嗎？ (kěyǐ... ma?)",desc:"<strong>使用原則：</strong>禮貌詢問是否可以做某事。",example:"例句：<strong>可以</strong>一起確認<strong>嗎</strong>？"},
+{title:"2. 先 + 動詞，再 + 動詞 (xiān... zài...)",desc:"<strong>使用原則：</strong>說明事情的先後順序。",example:"例句：<strong>先</strong>確認資料，<strong>再</strong>決定。"}
+],
+mindmap:"<strong>心智圖：【小組討論開會】</strong><br>情境確認 ➔ 討論 ➔ 分工 ➔ 注意資料 ➔ 確認進度 ➔ 完成處理",
+vocab:[
+{zh:"討論",pinyin:"tǎolùn",en:"discuss",exp:"和「小組討論開會」情境有關的常用詞。例如：我們需要注意討論。"},{zh:"分工",pinyin:"fēngōng",en:"division of work",exp:"和「小組討論開會」情境有關的常用詞。例如：我們需要注意分工。"},{zh:"資料",pinyin:"zīliào",en:"materials",exp:"和「小組討論開會」情境有關的常用詞。例如：我們需要注意資料。"},{zh:"進度",pinyin:"jìndù",en:"progress",exp:"和「小組討論開會」情境有關的常用詞。例如：我們需要注意進度。"},{zh:"截止日",pinyin:"jiézhǐrì",en:"deadline",exp:"和「小組討論開會」情境有關的常用詞。例如：我們需要注意截止日。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「小組討論開會」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+campus_ask:{title:"課後請教教授 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「課後請教教授」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下請教的情況。",en:"y"},
+{zh:"B：好，我也注意到請教需要處理。",en:" "},
+{zh:"A：那我們先討論作業，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意觀念。",en:"t"},
+{zh:"A：好，另外例子也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認辦公時間，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 要不要 + 動詞？ (yào bu yào...)",desc:"<strong>使用原則：</strong>口語提議或詢問對方意願。",example:"例句：<strong>要不要</strong>一起討論？"},
+{title:"2. 如果……就…… (rúguǒ... jiù...)",desc:"<strong>使用原則：</strong>表示條件與結果。",example:"例句：<strong>如果</strong>時間不夠，<strong>就</strong>先處理重要的。"}
+],
+mindmap:"<strong>心智圖：【課後請教教授】</strong><br>情境確認 ➔ 請教 ➔ 作業 ➔ 注意觀念 ➔ 確認例子 ➔ 完成處理",
+vocab:[
+{zh:"請教",pinyin:"qǐngjiào",en:"ask for advice",exp:"和「課後請教教授」情境有關的常用詞。例如：我們需要注意請教。"},{zh:"作業",pinyin:"zuòyè",en:"assignment",exp:"和「課後請教教授」情境有關的常用詞。例如：我們需要注意作業。"},{zh:"觀念",pinyin:"guānniàn",en:"concept",exp:"和「課後請教教授」情境有關的常用詞。例如：我們需要注意觀念。"},{zh:"例子",pinyin:"lìzi",en:"example",exp:"和「課後請教教授」情境有關的常用詞。例如：我們需要注意例子。"},{zh:"辦公時間",pinyin:"bàngōng shíjiān",en:"office hours",exp:"和「課後請教教授」情境有關的常用詞。例如：我們需要注意辦公時間。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「課後請教教授」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+campus_notes:{title:"期末考前借筆記 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「期末考前借筆記」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下筆記的情況。",en:"y"},
+{zh:"B：好，我也注意到筆記需要處理。",en:" "},
+{zh:"A：那我們先討論期末考，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意借。",en:"t"},
+{zh:"A：好，另外整理也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認複習，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 除了……還…… (chúle... hái...)",desc:"<strong>使用原則：</strong>在原有項目之外再增加內容。",example:"例句：<strong>除了</strong>資料，<strong>還</strong>要確認時間。"},
+{title:"2. 比較 + 形容詞 (bǐjiào...)",desc:"<strong>使用原則：</strong>比較兩種選擇或情況。",example:"例句：這個方法<strong>比較</strong>方便。"}
+],
+mindmap:"<strong>心智圖：【期末考前借筆記】</strong><br>情境確認 ➔ 筆記 ➔ 期末考 ➔ 注意借 ➔ 確認整理 ➔ 完成處理",
+vocab:[
+{zh:"筆記",pinyin:"bǐjì",en:"notes",exp:"和「期末考前借筆記」情境有關的常用詞。例如：我們需要注意筆記。"},{zh:"期末考",pinyin:"qīmò kǎo",en:"final exam",exp:"和「期末考前借筆記」情境有關的常用詞。例如：我們需要注意期末考。"},{zh:"借",pinyin:"jiè",en:"borrow",exp:"和「期末考前借筆記」情境有關的常用詞。例如：我們需要注意借。"},{zh:"整理",pinyin:"zhěnglǐ",en:"organize",exp:"和「期末考前借筆記」情境有關的常用詞。例如：我們需要注意整理。"},{zh:"複習",pinyin:"fùxí",en:"review",exp:"和「期末考前借筆記」情境有關的常用詞。例如：我們需要注意複習。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「期末考前借筆記」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+campus_extend:{title:"交報告期限求情 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「交報告期限求情」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下期限的情況。",en:"y"},
+{zh:"B：好，我也注意到期限需要處理。",en:" "},
+{zh:"A：那我們先討論延期，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意報告。",en:"t"},
+{zh:"A：好，另外來不及也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認補交，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 可以 + 動詞 + 嗎？ (kěyǐ... ma?)",desc:"<strong>使用原則：</strong>禮貌詢問是否可以做某事。",example:"例句：<strong>可以</strong>一起確認<strong>嗎</strong>？"},
+{title:"2. 先 + 動詞，再 + 動詞 (xiān... zài...)",desc:"<strong>使用原則：</strong>說明事情的先後順序。",example:"例句：<strong>先</strong>確認資料，<strong>再</strong>決定。"}
+],
+mindmap:"<strong>心智圖：【交報告期限求情】</strong><br>情境確認 ➔ 期限 ➔ 延期 ➔ 注意報告 ➔ 確認來不及 ➔ 完成處理",
+vocab:[
+{zh:"期限",pinyin:"qīxiàn",en:"deadline",exp:"和「交報告期限求情」情境有關的常用詞。例如：我們需要注意期限。"},{zh:"延期",pinyin:"yánqí",en:"extension",exp:"和「交報告期限求情」情境有關的常用詞。例如：我們需要注意延期。"},{zh:"報告",pinyin:"bàogào",en:"report",exp:"和「交報告期限求情」情境有關的常用詞。例如：我們需要注意報告。"},{zh:"來不及",pinyin:"lái bu jí",en:"not in time",exp:"和「交報告期限求情」情境有關的常用詞。例如：我們需要注意來不及。"},{zh:"補交",pinyin:"bǔjiāo",en:"submit later",exp:"和「交報告期限求情」情境有關的常用詞。例如：我們需要注意補交。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「交報告期限求情」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+campus_office:{title:"教授研究室面談 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「教授研究室面談」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下研究室的情況。",en:"y"},
+{zh:"B：好，我也注意到研究室需要處理。",en:" "},
+{zh:"A：那我們先討論面談，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意研究。",en:"t"},
+{zh:"A：好，另外方向也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認建議，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 要不要 + 動詞？ (yào bu yào...)",desc:"<strong>使用原則：</strong>口語提議或詢問對方意願。",example:"例句：<strong>要不要</strong>一起討論？"},
+{title:"2. 如果……就…… (rúguǒ... jiù...)",desc:"<strong>使用原則：</strong>表示條件與結果。",example:"例句：<strong>如果</strong>時間不夠，<strong>就</strong>先處理重要的。"}
+],
+mindmap:"<strong>心智圖：【教授研究室面談】</strong><br>情境確認 ➔ 研究室 ➔ 面談 ➔ 注意研究 ➔ 確認方向 ➔ 完成處理",
+vocab:[
+{zh:"研究室",pinyin:"yánjiūshì",en:"professor's office",exp:"和「教授研究室面談」情境有關的常用詞。例如：我們需要注意研究室。"},{zh:"面談",pinyin:"miàntán",en:"interview",exp:"和「教授研究室面談」情境有關的常用詞。例如：我們需要注意面談。"},{zh:"研究",pinyin:"yánjiū",en:"research",exp:"和「教授研究室面談」情境有關的常用詞。例如：我們需要注意研究。"},{zh:"方向",pinyin:"fāngxiàng",en:"direction",exp:"和「教授研究室面談」情境有關的常用詞。例如：我們需要注意方向。"},{zh:"建議",pinyin:"jiànyì",en:"suggestion",exp:"和「教授研究室面談」情境有關的常用詞。例如：我們需要注意建議。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「教授研究室面談」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+campus_exam:{title:"請學長姐傳承考古題 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「請學長姐傳承考古題」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下考古題的情況。",en:"y"},
+{zh:"B：好，我也注意到考古題需要處理。",en:" "},
+{zh:"A：那我們先討論學長姐，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意題型。",en:"t"},
+{zh:"A：好，另外重點也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認參考，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 除了……還…… (chúle... hái...)",desc:"<strong>使用原則：</strong>在原有項目之外再增加內容。",example:"例句：<strong>除了</strong>資料，<strong>還</strong>要確認時間。"},
+{title:"2. 比較 + 形容詞 (bǐjiào...)",desc:"<strong>使用原則：</strong>比較兩種選擇或情況。",example:"例句：這個方法<strong>比較</strong>方便。"}
+],
+mindmap:"<strong>心智圖：【請學長姐傳承考古題】</strong><br>情境確認 ➔ 考古題 ➔ 學長姐 ➔ 注意題型 ➔ 確認重點 ➔ 完成處理",
+vocab:[
+{zh:"考古題",pinyin:"kǎogǔtí",en:"past exam questions",exp:"和「請學長姐傳承考古題」情境有關的常用詞。例如：我們需要注意考古題。"},{zh:"學長姐",pinyin:"xuézhǎngjiě",en:"senior students",exp:"和「請學長姐傳承考古題」情境有關的常用詞。例如：我們需要注意學長姐。"},{zh:"題型",pinyin:"tíxíng",en:"question type",exp:"和「請學長姐傳承考古題」情境有關的常用詞。例如：我們需要注意題型。"},{zh:"重點",pinyin:"zhòngdiǎn",en:"key points",exp:"和「請學長姐傳承考古題」情境有關的常用詞。例如：我們需要注意重點。"},{zh:"參考",pinyin:"cānkǎo",en:"reference",exp:"和「請學長姐傳承考古題」情境有關的常用詞。例如：我們需要注意參考。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「請學長姐傳承考古題」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+social_welcome:{title:"籌辦迎新活動 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「籌辦迎新活動」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下迎新的情況。",en:"y"},
+{zh:"B：好，我也注意到迎新需要處理。",en:" "},
+{zh:"A：那我們先討論活動，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意場地。",en:"t"},
+{zh:"A：好，另外流程也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認報名，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 可以 + 動詞 + 嗎？ (kěyǐ... ma?)",desc:"<strong>使用原則：</strong>禮貌詢問是否可以做某事。",example:"例句：<strong>可以</strong>一起確認<strong>嗎</strong>？"},
+{title:"2. 先 + 動詞，再 + 動詞 (xiān... zài...)",desc:"<strong>使用原則：</strong>說明事情的先後順序。",example:"例句：<strong>先</strong>確認資料，<strong>再</strong>決定。"}
+],
+mindmap:"<strong>心智圖：【籌辦迎新活動】</strong><br>情境確認 ➔ 迎新 ➔ 活動 ➔ 注意場地 ➔ 確認流程 ➔ 完成處理",
+vocab:[
+{zh:"迎新",pinyin:"yíngxīn",en:"welcome event",exp:"和「籌辦迎新活動」情境有關的常用詞。例如：我們需要注意迎新。"},{zh:"活動",pinyin:"huódòng",en:"event",exp:"和「籌辦迎新活動」情境有關的常用詞。例如：我們需要注意活動。"},{zh:"場地",pinyin:"chǎngdì",en:"venue",exp:"和「籌辦迎新活動」情境有關的常用詞。例如：我們需要注意場地。"},{zh:"流程",pinyin:"liúchéng",en:"schedule",exp:"和「籌辦迎新活動」情境有關的常用詞。例如：我們需要注意流程。"},{zh:"報名",pinyin:"bàomíng",en:"registration",exp:"和「籌辦迎新活動」情境有關的常用詞。例如：我們需要注意報名。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「籌辦迎新活動」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+social_ball:{title:"校園運動場打球 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「校園運動場打球」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下球場的情況。",en:"y"},
+{zh:"B：好，我也注意到球場需要處理。",en:" "},
+{zh:"A：那我們先討論打球，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意投籃。",en:"t"},
+{zh:"A：好，另外熱身也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認休息，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 要不要 + 動詞？ (yào bu yào...)",desc:"<strong>使用原則：</strong>口語提議或詢問對方意願。",example:"例句：<strong>要不要</strong>一起討論？"},
+{title:"2. 如果……就…… (rúguǒ... jiù...)",desc:"<strong>使用原則：</strong>表示條件與結果。",example:"例句：<strong>如果</strong>時間不夠，<strong>就</strong>先處理重要的。"}
+],
+mindmap:"<strong>心智圖：【校園運動場打球】</strong><br>情境確認 ➔ 球場 ➔ 打球 ➔ 注意投籃 ➔ 確認熱身 ➔ 完成處理",
+vocab:[
+{zh:"球場",pinyin:"qiúchǎng",en:"court",exp:"和「校園運動場打球」情境有關的常用詞。例如：我們需要注意球場。"},{zh:"打球",pinyin:"dǎqiú",en:"play ball",exp:"和「校園運動場打球」情境有關的常用詞。例如：我們需要注意打球。"},{zh:"投籃",pinyin:"tóulán",en:"shoot",exp:"和「校園運動場打球」情境有關的常用詞。例如：我們需要注意投籃。"},{zh:"熱身",pinyin:"rèshēn",en:"warm up",exp:"和「校園運動場打球」情境有關的常用詞。例如：我們需要注意熱身。"},{zh:"休息",pinyin:"xiūxi",en:"rest",exp:"和「校園運動場打球」情境有關的常用詞。例如：我們需要注意休息。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「校園運動場打球」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+social_date:{title:"約心儀對象去夜市 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「約心儀對象去夜市」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下心儀的情況。",en:"y"},
+{zh:"B：好，我也注意到心儀需要處理。",en:" "},
+{zh:"A：那我們先討論約，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意夜市。",en:"t"},
+{zh:"A：好，另外逛也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認有空，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 除了……還…… (chúle... hái...)",desc:"<strong>使用原則：</strong>在原有項目之外再增加內容。",example:"例句：<strong>除了</strong>資料，<strong>還</strong>要確認時間。"},
+{title:"2. 比較 + 形容詞 (bǐjiào...)",desc:"<strong>使用原則：</strong>比較兩種選擇或情況。",example:"例句：這個方法<strong>比較</strong>方便。"}
+],
+mindmap:"<strong>心智圖：【約心儀對象去夜市】</strong><br>情境確認 ➔ 心儀 ➔ 約 ➔ 注意夜市 ➔ 確認逛 ➔ 完成處理",
+vocab:[
+{zh:"心儀",pinyin:"xīnyí",en:"admire",exp:"和「約心儀對象去夜市」情境有關的常用詞。例如：我們需要注意心儀。"},{zh:"約",pinyin:"yuē",en:"invite/date",exp:"和「約心儀對象去夜市」情境有關的常用詞。例如：我們需要注意約。"},{zh:"夜市",pinyin:"yèshì",en:"night market",exp:"和「約心儀對象去夜市」情境有關的常用詞。例如：我們需要注意夜市。"},{zh:"逛",pinyin:"guàng",en:"stroll",exp:"和「約心儀對象去夜市」情境有關的常用詞。例如：我們需要注意逛。"},{zh:"有空",pinyin:"yǒu kòng",en:"be free",exp:"和「約心儀對象去夜市」情境有關的常用詞。例如：我們需要注意有空。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「約心儀對象去夜市」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+social_scooter:{title:"機車雙載出遊 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「機車雙載出遊」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下機車的情況。",en:"y"},
+{zh:"B：好，我也注意到機車需要處理。",en:" "},
+{zh:"A：那我們先討論雙載，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意安全帽。",en:"t"},
+{zh:"A：好，另外導航也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認加油，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 可以 + 動詞 + 嗎？ (kěyǐ... ma?)",desc:"<strong>使用原則：</strong>禮貌詢問是否可以做某事。",example:"例句：<strong>可以</strong>一起確認<strong>嗎</strong>？"},
+{title:"2. 先 + 動詞，再 + 動詞 (xiān... zài...)",desc:"<strong>使用原則：</strong>說明事情的先後順序。",example:"例句：<strong>先</strong>確認資料，<strong>再</strong>決定。"}
+],
+mindmap:"<strong>心智圖：【機車雙載出遊】</strong><br>情境確認 ➔ 機車 ➔ 雙載 ➔ 注意安全帽 ➔ 確認導航 ➔ 完成處理",
+vocab:[
+{zh:"機車",pinyin:"jīchē",en:"scooter",exp:"和「機車雙載出遊」情境有關的常用詞。例如：我們需要注意機車。"},{zh:"雙載",pinyin:"shuāngzài",en:"ride two people",exp:"和「機車雙載出遊」情境有關的常用詞。例如：我們需要注意雙載。"},{zh:"安全帽",pinyin:"ānquánmào",en:"helmet",exp:"和「機車雙載出遊」情境有關的常用詞。例如：我們需要注意安全帽。"},{zh:"導航",pinyin:"dǎoháng",en:"navigation",exp:"和「機車雙載出遊」情境有關的常用詞。例如：我們需要注意導航。"},{zh:"加油",pinyin:"jiāyóu",en:"refuel",exp:"和「機車雙載出遊」情境有關的常用詞。例如：我們需要注意加油。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「機車雙載出遊」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+social_secondhand:{title:"校園二手物買賣 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「校園二手物買賣」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下二手的情況。",en:"y"},
+{zh:"B：好，我也注意到二手需要處理。",en:" "},
+{zh:"A：那我們先討論出售，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意價格。",en:"t"},
+{zh:"A：好，另外使用也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認面交，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 要不要 + 動詞？ (yào bu yào...)",desc:"<strong>使用原則：</strong>口語提議或詢問對方意願。",example:"例句：<strong>要不要</strong>一起討論？"},
+{title:"2. 如果……就…… (rúguǒ... jiù...)",desc:"<strong>使用原則：</strong>表示條件與結果。",example:"例句：<strong>如果</strong>時間不夠，<strong>就</strong>先處理重要的。"}
+],
+mindmap:"<strong>心智圖：【校園二手物買賣】</strong><br>情境確認 ➔ 二手 ➔ 出售 ➔ 注意價格 ➔ 確認使用 ➔ 完成處理",
+vocab:[
+{zh:"二手",pinyin:"èrshǒu",en:"second-hand",exp:"和「校園二手物買賣」情境有關的常用詞。例如：我們需要注意二手。"},{zh:"出售",pinyin:"chūshòu",en:"sell",exp:"和「校園二手物買賣」情境有關的常用詞。例如：我們需要注意出售。"},{zh:"價格",pinyin:"jiàgé",en:"price",exp:"和「校園二手物買賣」情境有關的常用詞。例如：我們需要注意價格。"},{zh:"使用",pinyin:"shǐyòng",en:"use",exp:"和「校園二手物買賣」情境有關的常用詞。例如：我們需要注意使用。"},{zh:"面交",pinyin:"miànjiāo",en:"meet for exchange",exp:"和「校園二手物買賣」情境有關的常用詞。例如：我們需要注意面交。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「校園二手物買賣」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+social_job:{title:"工讀面試諮詢 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「工讀面試諮詢」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下工讀的情況。",en:"y"},
+{zh:"B：好，我也注意到工讀需要處理。",en:" "},
+{zh:"A：那我們先討論時薪，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意排班。",en:"t"},
+{zh:"A：好，另外經驗也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認履歷，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 除了……還…… (chúle... hái...)",desc:"<strong>使用原則：</strong>在原有項目之外再增加內容。",example:"例句：<strong>除了</strong>資料，<strong>還</strong>要確認時間。"},
+{title:"2. 比較 + 形容詞 (bǐjiào...)",desc:"<strong>使用原則：</strong>比較兩種選擇或情況。",example:"例句：這個方法<strong>比較</strong>方便。"}
+],
+mindmap:"<strong>心智圖：【工讀面試諮詢】</strong><br>情境確認 ➔ 工讀 ➔ 時薪 ➔ 注意排班 ➔ 確認經驗 ➔ 完成處理",
+vocab:[
+{zh:"工讀",pinyin:"gōngdú",en:"part-time job",exp:"和「工讀面試諮詢」情境有關的常用詞。例如：我們需要注意工讀。"},{zh:"時薪",pinyin:"shíxīn",en:"hourly wage",exp:"和「工讀面試諮詢」情境有關的常用詞。例如：我們需要注意時薪。"},{zh:"排班",pinyin:"páibān",en:"shift scheduling",exp:"和「工讀面試諮詢」情境有關的常用詞。例如：我們需要注意排班。"},{zh:"經驗",pinyin:"jīngyàn",en:"experience",exp:"和「工讀面試諮詢」情境有關的常用詞。例如：我們需要注意經驗。"},{zh:"履歷",pinyin:"lǚlì",en:"resume",exp:"和「工讀面試諮詢」情境有關的常用詞。例如：我們需要注意履歷。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「工讀面試諮詢」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+social_future:{title:"討論畢業出路 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「討論畢業出路」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下畢業的情況。",en:"y"},
+{zh:"B：好，我也注意到畢業需要處理。",en:" "},
+{zh:"A：那我們先討論出路，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意工作。",en:"t"},
+{zh:"A：好，另外實習也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認規劃，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 可以 + 動詞 + 嗎？ (kěyǐ... ma?)",desc:"<strong>使用原則：</strong>禮貌詢問是否可以做某事。",example:"例句：<strong>可以</strong>一起確認<strong>嗎</strong>？"},
+{title:"2. 先 + 動詞，再 + 動詞 (xiān... zài...)",desc:"<strong>使用原則：</strong>說明事情的先後順序。",example:"例句：<strong>先</strong>確認資料，<strong>再</strong>決定。"}
+],
+mindmap:"<strong>心智圖：【討論畢業出路】</strong><br>情境確認 ➔ 畢業 ➔ 出路 ➔ 注意工作 ➔ 確認實習 ➔ 完成處理",
+vocab:[
+{zh:"畢業",pinyin:"bìyè",en:"graduate",exp:"和「討論畢業出路」情境有關的常用詞。例如：我們需要注意畢業。"},{zh:"出路",pinyin:"chūlù",en:"career path",exp:"和「討論畢業出路」情境有關的常用詞。例如：我們需要注意出路。"},{zh:"工作",pinyin:"gōngzuò",en:"job",exp:"和「討論畢業出路」情境有關的常用詞。例如：我們需要注意工作。"},{zh:"實習",pinyin:"shíxí",en:"internship",exp:"和「討論畢業出路」情境有關的常用詞。例如：我們需要注意實習。"},{zh:"規劃",pinyin:"guīhuà",en:"plan",exp:"和「討論畢業出路」情境有關的常用詞。例如：我們需要注意規劃。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「討論畢業出路」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+social_candy:{title:"期末歐趴糖祝福 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「期末歐趴糖祝福」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下歐趴糖的情況。",en:"y"},
+{zh:"B：好，我也注意到歐趴糖需要處理。",en:" "},
+{zh:"A：那我們先討論期末，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意祝福。",en:"t"},
+{zh:"A：好，另外考試也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認順利，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 要不要 + 動詞？ (yào bu yào...)",desc:"<strong>使用原則：</strong>口語提議或詢問對方意願。",example:"例句：<strong>要不要</strong>一起討論？"},
+{title:"2. 如果……就…… (rúguǒ... jiù...)",desc:"<strong>使用原則：</strong>表示條件與結果。",example:"例句：<strong>如果</strong>時間不夠，<strong>就</strong>先處理重要的。"}
+],
+mindmap:"<strong>心智圖：【期末歐趴糖祝福】</strong><br>情境確認 ➔ 歐趴糖 ➔ 期末 ➔ 注意祝福 ➔ 確認考試 ➔ 完成處理",
+vocab:[
+{zh:"歐趴糖",pinyin:"ōu pā táng",en:"good-luck candy",exp:"和「期末歐趴糖祝福」情境有關的常用詞。例如：我們需要注意歐趴糖。"},{zh:"期末",pinyin:"qímò",en:"end of semester",exp:"和「期末歐趴糖祝福」情境有關的常用詞。例如：我們需要注意期末。"},{zh:"祝福",pinyin:"zhùfú",en:"blessing",exp:"和「期末歐趴糖祝福」情境有關的常用詞。例如：我們需要注意祝福。"},{zh:"考試",pinyin:"kǎoshì",en:"exam",exp:"和「期末歐趴糖祝福」情境有關的常用詞。例如：我們需要注意考試。"},{zh:"順利",pinyin:"shùnlì",en:"smoothly",exp:"和「期末歐趴糖祝福」情境有關的常用詞。例如：我們需要注意順利。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「期末歐趴糖祝福」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+shop_department:{title:"百貨公司 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「百貨公司」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下百貨公司的情況。",en:"y"},
+{zh:"B：好，我也注意到百貨公司需要處理。",en:" "},
+{zh:"A：那我們先討論樓層，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意專櫃。",en:"t"},
+{zh:"A：好，另外折扣也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認退貨，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 除了……還…… (chúle... hái...)",desc:"<strong>使用原則：</strong>在原有項目之外再增加內容。",example:"例句：<strong>除了</strong>資料，<strong>還</strong>要確認時間。"},
+{title:"2. 比較 + 形容詞 (bǐjiào...)",desc:"<strong>使用原則：</strong>比較兩種選擇或情況。",example:"例句：這個方法<strong>比較</strong>方便。"}
+],
+mindmap:"<strong>心智圖：【百貨公司】</strong><br>情境確認 ➔ 百貨公司 ➔ 樓層 ➔ 注意專櫃 ➔ 確認折扣 ➔ 完成處理",
+vocab:[
+{zh:"百貨公司",pinyin:"bǎihuò gōngsī",en:"department store",exp:"和「百貨公司」情境有關的常用詞。例如：我們需要注意百貨公司。"},{zh:"樓層",pinyin:"lóucéng",en:"floor",exp:"和「百貨公司」情境有關的常用詞。例如：我們需要注意樓層。"},{zh:"專櫃",pinyin:"zhuānguì",en:"counter",exp:"和「百貨公司」情境有關的常用詞。例如：我們需要注意專櫃。"},{zh:"折扣",pinyin:"zhékòu",en:"discount",exp:"和「百貨公司」情境有關的常用詞。例如：我們需要注意折扣。"},{zh:"退貨",pinyin:"tuìhuò",en:"return",exp:"和「百貨公司」情境有關的常用詞。例如：我們需要注意退貨。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「百貨公司」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+shop_supermarket:{title:"超級市場 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「超級市場」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下超級市場的情況。",en:"y"},
+{zh:"B：好，我也注意到超級市場需要處理。",en:" "},
+{zh:"A：那我們先討論購物車，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意特價。",en:"t"},
+{zh:"A：好，另外冷凍也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認結帳，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 可以 + 動詞 + 嗎？ (kěyǐ... ma?)",desc:"<strong>使用原則：</strong>禮貌詢問是否可以做某事。",example:"例句：<strong>可以</strong>一起確認<strong>嗎</strong>？"},
+{title:"2. 先 + 動詞，再 + 動詞 (xiān... zài...)",desc:"<strong>使用原則：</strong>說明事情的先後順序。",example:"例句：<strong>先</strong>確認資料，<strong>再</strong>決定。"}
+],
+mindmap:"<strong>心智圖：【超級市場】</strong><br>情境確認 ➔ 超級市場 ➔ 購物車 ➔ 注意特價 ➔ 確認冷凍 ➔ 完成處理",
+vocab:[
+{zh:"超級市場",pinyin:"chāojí shìchǎng",en:"supermarket",exp:"和「超級市場」情境有關的常用詞。例如：我們需要注意超級市場。"},{zh:"購物車",pinyin:"gòuwùchē",en:"shopping cart",exp:"和「超級市場」情境有關的常用詞。例如：我們需要注意購物車。"},{zh:"特價",pinyin:"tèjià",en:"special price",exp:"和「超級市場」情境有關的常用詞。例如：我們需要注意特價。"},{zh:"冷凍",pinyin:"lěngdòng",en:"frozen",exp:"和「超級市場」情境有關的常用詞。例如：我們需要注意冷凍。"},{zh:"結帳",pinyin:"jiézhàng",en:"checkout",exp:"和「超級市場」情境有關的常用詞。例如：我們需要注意結帳。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「超級市場」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+dine_cafe:{title:"咖啡廳下午茶 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「咖啡廳下午茶」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下下午茶的情況。",en:"y"},
+{zh:"B：好，我也注意到下午茶需要處理。",en:" "},
+{zh:"A：那我們先討論拿鐵，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意甜點。",en:"t"},
+{zh:"A：好，另外內用也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認低消，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 要不要 + 動詞？ (yào bu yào...)",desc:"<strong>使用原則：</strong>口語提議或詢問對方意願。",example:"例句：<strong>要不要</strong>一起討論？"},
+{title:"2. 如果……就…… (rúguǒ... jiù...)",desc:"<strong>使用原則：</strong>表示條件與結果。",example:"例句：<strong>如果</strong>時間不夠，<strong>就</strong>先處理重要的。"}
+],
+mindmap:"<strong>心智圖：【咖啡廳下午茶】</strong><br>情境確認 ➔ 下午茶 ➔ 拿鐵 ➔ 注意甜點 ➔ 確認內用 ➔ 完成處理",
+vocab:[
+{zh:"下午茶",pinyin:"xiàwǔchá",en:"afternoon tea",exp:"和「咖啡廳下午茶」情境有關的常用詞。例如：我們需要注意下午茶。"},{zh:"拿鐵",pinyin:"nátiě",en:"latte",exp:"和「咖啡廳下午茶」情境有關的常用詞。例如：我們需要注意拿鐵。"},{zh:"甜點",pinyin:"tiándiǎn",en:"dessert",exp:"和「咖啡廳下午茶」情境有關的常用詞。例如：我們需要注意甜點。"},{zh:"內用",pinyin:"nèiyòng",en:"dine in",exp:"和「咖啡廳下午茶」情境有關的常用詞。例如：我們需要注意內用。"},{zh:"低消",pinyin:"dīxiāo",en:"minimum charge",exp:"和「咖啡廳下午茶」情境有關的常用詞。例如：我們需要注意低消。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「咖啡廳下午茶」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+dine_queue:{title:"排隊名店 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「排隊名店」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下名店的情況。",en:"y"},
+{zh:"B：好，我也注意到名店需要處理。",en:" "},
+{zh:"A：那我們先討論候位，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意號碼牌。",en:"t"},
+{zh:"A：好，另外預估也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認入座，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 除了……還…… (chúle... hái...)",desc:"<strong>使用原則：</strong>在原有項目之外再增加內容。",example:"例句：<strong>除了</strong>資料，<strong>還</strong>要確認時間。"},
+{title:"2. 比較 + 形容詞 (bǐjiào...)",desc:"<strong>使用原則：</strong>比較兩種選擇或情況。",example:"例句：這個方法<strong>比較</strong>方便。"}
+],
+mindmap:"<strong>心智圖：【排隊名店】</strong><br>情境確認 ➔ 名店 ➔ 候位 ➔ 注意號碼牌 ➔ 確認預估 ➔ 完成處理",
+vocab:[
+{zh:"名店",pinyin:"míngdiàn",en:"famous restaurant",exp:"和「排隊名店」情境有關的常用詞。例如：我們需要注意名店。"},{zh:"候位",pinyin:"hòuwèi",en:"wait for a table",exp:"和「排隊名店」情境有關的常用詞。例如：我們需要注意候位。"},{zh:"號碼牌",pinyin:"hàomǎpái",en:"queue number",exp:"和「排隊名店」情境有關的常用詞。例如：我們需要注意號碼牌。"},{zh:"預估",pinyin:"yùgū",en:"estimate",exp:"和「排隊名店」情境有關的常用詞。例如：我們需要注意預估。"},{zh:"入座",pinyin:"rùzuò",en:"be seated",exp:"和「排隊名店」情境有關的常用詞。例如：我們需要注意入座。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「排隊名店」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+dine_takeout:{title:"餐廳外帶 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「餐廳外帶」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下外帶的情況。",en:"y"},
+{zh:"B：好，我也注意到外帶需要處理。",en:" "},
+{zh:"A：那我們先討論打包，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意餐具。",en:"t"},
+{zh:"A：好，另外醬料也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認取餐，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 可以 + 動詞 + 嗎？ (kěyǐ... ma?)",desc:"<strong>使用原則：</strong>禮貌詢問是否可以做某事。",example:"例句：<strong>可以</strong>一起確認<strong>嗎</strong>？"},
+{title:"2. 先 + 動詞，再 + 動詞 (xiān... zài...)",desc:"<strong>使用原則：</strong>說明事情的先後順序。",example:"例句：<strong>先</strong>確認資料，<strong>再</strong>決定。"}
+],
+mindmap:"<strong>心智圖：【餐廳外帶】</strong><br>情境確認 ➔ 外帶 ➔ 打包 ➔ 注意餐具 ➔ 確認醬料 ➔ 完成處理",
+vocab:[
+{zh:"外帶",pinyin:"wàidài",en:"takeout",exp:"和「餐廳外帶」情境有關的常用詞。例如：我們需要注意外帶。"},{zh:"打包",pinyin:"dǎbāo",en:"pack",exp:"和「餐廳外帶」情境有關的常用詞。例如：我們需要注意打包。"},{zh:"餐具",pinyin:"cānjù",en:"utensils",exp:"和「餐廳外帶」情境有關的常用詞。例如：我們需要注意餐具。"},{zh:"醬料",pinyin:"jiàngliào",en:"sauce",exp:"和「餐廳外帶」情境有關的常用詞。例如：我們需要注意醬料。"},{zh:"取餐",pinyin:"qǔcān",en:"pick up food",exp:"和「餐廳外帶」情境有關的常用詞。例如：我們需要注意取餐。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「餐廳外帶」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+dine_bar:{title:"酒吧小酌 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「酒吧小酌」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下酒吧的情況。",en:"y"},
+{zh:"B：好，我也注意到酒吧需要處理。",en:" "},
+{zh:"A：那我們先討論小酌，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意無酒精。",en:"t"},
+{zh:"A：好，另外調酒也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認結帳，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 要不要 + 動詞？ (yào bu yào...)",desc:"<strong>使用原則：</strong>口語提議或詢問對方意願。",example:"例句：<strong>要不要</strong>一起討論？"},
+{title:"2. 如果……就…… (rúguǒ... jiù...)",desc:"<strong>使用原則：</strong>表示條件與結果。",example:"例句：<strong>如果</strong>時間不夠，<strong>就</strong>先處理重要的。"}
+],
+mindmap:"<strong>心智圖：【酒吧小酌】</strong><br>情境確認 ➔ 酒吧 ➔ 小酌 ➔ 注意無酒精 ➔ 確認調酒 ➔ 完成處理",
+vocab:[
+{zh:"酒吧",pinyin:"jiǔbā",en:"bar",exp:"和「酒吧小酌」情境有關的常用詞。例如：我們需要注意酒吧。"},{zh:"小酌",pinyin:"xiǎozhuó",en:"have a drink",exp:"和「酒吧小酌」情境有關的常用詞。例如：我們需要注意小酌。"},{zh:"無酒精",pinyin:"wú jiǔjīng",en:"non-alcoholic",exp:"和「酒吧小酌」情境有關的常用詞。例如：我們需要注意無酒精。"},{zh:"調酒",pinyin:"tiáojiǔ",en:"cocktail",exp:"和「酒吧小酌」情境有關的常用詞。例如：我們需要注意調酒。"},{zh:"結帳",pinyin:"jiézhàng",en:"bill",exp:"和「酒吧小酌」情境有關的常用詞。例如：我們需要注意結帳。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「酒吧小酌」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+trans_train:{title:"火車站買票 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「火車站買票」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下火車站的情況。",en:"y"},
+{zh:"B：好，我也注意到火車站需要處理。",en:" "},
+{zh:"A：那我們先討論車票，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意自強號。",en:"t"},
+{zh:"A：好，另外月台也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認單程，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 除了……還…… (chúle... hái...)",desc:"<strong>使用原則：</strong>在原有項目之外再增加內容。",example:"例句：<strong>除了</strong>資料，<strong>還</strong>要確認時間。"},
+{title:"2. 比較 + 形容詞 (bǐjiào...)",desc:"<strong>使用原則：</strong>比較兩種選擇或情況。",example:"例句：這個方法<strong>比較</strong>方便。"}
+],
+mindmap:"<strong>心智圖：【火車站買票】</strong><br>情境確認 ➔ 火車站 ➔ 車票 ➔ 注意自強號 ➔ 確認月台 ➔ 完成處理",
+vocab:[
+{zh:"火車站",pinyin:"huǒchēzhàn",en:"train station",exp:"和「火車站買票」情境有關的常用詞。例如：我們需要注意火車站。"},{zh:"車票",pinyin:"chēpiào",en:"ticket",exp:"和「火車站買票」情境有關的常用詞。例如：我們需要注意車票。"},{zh:"自強號",pinyin:"zìqiáng hào",en:"Tze-Chiang train",exp:"和「火車站買票」情境有關的常用詞。例如：我們需要注意自強號。"},{zh:"月台",pinyin:"yuètái",en:"platform",exp:"和「火車站買票」情境有關的常用詞。例如：我們需要注意月台。"},{zh:"單程",pinyin:"dānchéng",en:"one-way",exp:"和「火車站買票」情境有關的常用詞。例如：我們需要注意單程。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「火車站買票」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+trans_hotel:{title:"飯店入住 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「飯店入住」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下入住的情況。",en:"y"},
+{zh:"B：好，我也注意到入住需要處理。",en:" "},
+{zh:"A：那我們先討論訂房，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意護照。",en:"t"},
+{zh:"A：好，另外房卡也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認早餐，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 可以 + 動詞 + 嗎？ (kěyǐ... ma?)",desc:"<strong>使用原則：</strong>禮貌詢問是否可以做某事。",example:"例句：<strong>可以</strong>一起確認<strong>嗎</strong>？"},
+{title:"2. 先 + 動詞，再 + 動詞 (xiān... zài...)",desc:"<strong>使用原則：</strong>說明事情的先後順序。",example:"例句：<strong>先</strong>確認資料，<strong>再</strong>決定。"}
+],
+mindmap:"<strong>心智圖：【飯店入住】</strong><br>情境確認 ➔ 入住 ➔ 訂房 ➔ 注意護照 ➔ 確認房卡 ➔ 完成處理",
+vocab:[
+{zh:"入住",pinyin:"rùzhù",en:"check in",exp:"和「飯店入住」情境有關的常用詞。例如：我們需要注意入住。"},{zh:"訂房",pinyin:"dìngfáng",en:"reservation",exp:"和「飯店入住」情境有關的常用詞。例如：我們需要注意訂房。"},{zh:"護照",pinyin:"hùzhào",en:"passport",exp:"和「飯店入住」情境有關的常用詞。例如：我們需要注意護照。"},{zh:"房卡",pinyin:"fángkǎ",en:"room key card",exp:"和「飯店入住」情境有關的常用詞。例如：我們需要注意房卡。"},{zh:"早餐",pinyin:"zǎocān",en:"breakfast",exp:"和「飯店入住」情境有關的常用詞。例如：我們需要注意早餐。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「飯店入住」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+trans_askway:{title:"路人問路 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「路人問路」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下問路的情況。",en:"y"},
+{zh:"B：好，我也注意到問路需要處理。",en:" "},
+{zh:"A：那我們先討論直走，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意轉彎。",en:"t"},
+{zh:"A：好，另外紅綠燈也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認附近，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 要不要 + 動詞？ (yào bu yào...)",desc:"<strong>使用原則：</strong>口語提議或詢問對方意願。",example:"例句：<strong>要不要</strong>一起討論？"},
+{title:"2. 如果……就…… (rúguǒ... jiù...)",desc:"<strong>使用原則：</strong>表示條件與結果。",example:"例句：<strong>如果</strong>時間不夠，<strong>就</strong>先處理重要的。"}
+],
+mindmap:"<strong>心智圖：【路人問路】</strong><br>情境確認 ➔ 問路 ➔ 直走 ➔ 注意轉彎 ➔ 確認紅綠燈 ➔ 完成處理",
+vocab:[
+{zh:"問路",pinyin:"wènlù",en:"ask directions",exp:"和「路人問路」情境有關的常用詞。例如：我們需要注意問路。"},{zh:"直走",pinyin:"zhízǒu",en:"go straight",exp:"和「路人問路」情境有關的常用詞。例如：我們需要注意直走。"},{zh:"轉彎",pinyin:"zhuǎnwān",en:"turn",exp:"和「路人問路」情境有關的常用詞。例如：我們需要注意轉彎。"},{zh:"紅綠燈",pinyin:"hónglǜdēng",en:"traffic light",exp:"和「路人問路」情境有關的常用詞。例如：我們需要注意紅綠燈。"},{zh:"附近",pinyin:"fùjìn",en:"nearby",exp:"和「路人問路」情境有關的常用詞。例如：我們需要注意附近。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「路人問路」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+trans_rentcar:{title:"租車自駕 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「租車自駕」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下租車的情況。",en:"y"},
+{zh:"B：好，我也注意到租車需要處理。",en:" "},
+{zh:"A：那我們先討論駕照，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意保險。",en:"t"},
+{zh:"A：好，另外里程也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認還車，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 除了……還…… (chúle... hái...)",desc:"<strong>使用原則：</strong>在原有項目之外再增加內容。",example:"例句：<strong>除了</strong>資料，<strong>還</strong>要確認時間。"},
+{title:"2. 比較 + 形容詞 (bǐjiào...)",desc:"<strong>使用原則：</strong>比較兩種選擇或情況。",example:"例句：這個方法<strong>比較</strong>方便。"}
+],
+mindmap:"<strong>心智圖：【租車自駕】</strong><br>情境確認 ➔ 租車 ➔ 駕照 ➔ 注意保險 ➔ 確認里程 ➔ 完成處理",
+vocab:[
+{zh:"租車",pinyin:"zūchē",en:"rent a car",exp:"和「租車自駕」情境有關的常用詞。例如：我們需要注意租車。"},{zh:"駕照",pinyin:"jiàzhào",en:"driver's license",exp:"和「租車自駕」情境有關的常用詞。例如：我們需要注意駕照。"},{zh:"保險",pinyin:"bǎoxiǎn",en:"insurance",exp:"和「租車自駕」情境有關的常用詞。例如：我們需要注意保險。"},{zh:"里程",pinyin:"lǐchéng",en:"mileage",exp:"和「租車自駕」情境有關的常用詞。例如：我們需要注意里程。"},{zh:"還車",pinyin:"huánchē",en:"return car",exp:"和「租車自駕」情境有關的常用詞。例如：我們需要注意還車。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「租車自駕」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+work_interview:{title:"面試自我介紹 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「面試自我介紹」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下面試的情況。",en:"y"},
+{zh:"B：好，我也注意到面試需要處理。",en:" "},
+{zh:"A：那我們先討論自我介紹，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意專長。",en:"t"},
+{zh:"A：好，另外經驗也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認職缺，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 可以 + 動詞 + 嗎？ (kěyǐ... ma?)",desc:"<strong>使用原則：</strong>禮貌詢問是否可以做某事。",example:"例句：<strong>可以</strong>一起確認<strong>嗎</strong>？"},
+{title:"2. 先 + 動詞，再 + 動詞 (xiān... zài...)",desc:"<strong>使用原則：</strong>說明事情的先後順序。",example:"例句：<strong>先</strong>確認資料，<strong>再</strong>決定。"}
+],
+mindmap:"<strong>心智圖：【面試自我介紹】</strong><br>情境確認 ➔ 面試 ➔ 自我介紹 ➔ 注意專長 ➔ 確認經驗 ➔ 完成處理",
+vocab:[
+{zh:"面試",pinyin:"miànshì",en:"interview",exp:"和「面試自我介紹」情境有關的常用詞。例如：我們需要注意面試。"},{zh:"自我介紹",pinyin:"zìwǒ jièshào",en:"self-introduction",exp:"和「面試自我介紹」情境有關的常用詞。例如：我們需要注意自我介紹。"},{zh:"專長",pinyin:"zhuāncháng",en:"specialty",exp:"和「面試自我介紹」情境有關的常用詞。例如：我們需要注意專長。"},{zh:"經驗",pinyin:"jīngyàn",en:"experience",exp:"和「面試自我介紹」情境有關的常用詞。例如：我們需要注意經驗。"},{zh:"職缺",pinyin:"zhíquē",en:"job opening",exp:"和「面試自我介紹」情境有關的常用詞。例如：我們需要注意職缺。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「面試自我介紹」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+work_meeting:{title:"商務會議 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「商務會議」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下會議的情況。",en:"y"},
+{zh:"B：好，我也注意到會議需要處理。",en:" "},
+{zh:"A：那我們先討論議程，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意提案。",en:"t"},
+{zh:"A：好，另外共識也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認決議，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 要不要 + 動詞？ (yào bu yào...)",desc:"<strong>使用原則：</strong>口語提議或詢問對方意願。",example:"例句：<strong>要不要</strong>一起討論？"},
+{title:"2. 如果……就…… (rúguǒ... jiù...)",desc:"<strong>使用原則：</strong>表示條件與結果。",example:"例句：<strong>如果</strong>時間不夠，<strong>就</strong>先處理重要的。"}
+],
+mindmap:"<strong>心智圖：【商務會議】</strong><br>情境確認 ➔ 會議 ➔ 議程 ➔ 注意提案 ➔ 確認共識 ➔ 完成處理",
+vocab:[
+{zh:"會議",pinyin:"huìyì",en:"meeting",exp:"和「商務會議」情境有關的常用詞。例如：我們需要注意會議。"},{zh:"議程",pinyin:"yìchéng",en:"agenda",exp:"和「商務會議」情境有關的常用詞。例如：我們需要注意議程。"},{zh:"提案",pinyin:"tí'àn",en:"proposal",exp:"和「商務會議」情境有關的常用詞。例如：我們需要注意提案。"},{zh:"共識",pinyin:"gòngshí",en:"consensus",exp:"和「商務會議」情境有關的常用詞。例如：我們需要注意共識。"},{zh:"決議",pinyin:"juéyì",en:"resolution",exp:"和「商務會議」情境有關的常用詞。例如：我們需要注意決議。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「商務會議」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+work_phone:{title:"接聽客戶電話 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「接聽客戶電話」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下客戶的情況。",en:"y"},
+{zh:"B：好，我也注意到客戶需要處理。",en:" "},
+{zh:"A：那我們先討論電話，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意轉接。",en:"t"},
+{zh:"A：好，另外留言也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認回電，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 除了……還…… (chúle... hái...)",desc:"<strong>使用原則：</strong>在原有項目之外再增加內容。",example:"例句：<strong>除了</strong>資料，<strong>還</strong>要確認時間。"},
+{title:"2. 比較 + 形容詞 (bǐjiào...)",desc:"<strong>使用原則：</strong>比較兩種選擇或情況。",example:"例句：這個方法<strong>比較</strong>方便。"}
+],
+mindmap:"<strong>心智圖：【接聽客戶電話】</strong><br>情境確認 ➔ 客戶 ➔ 電話 ➔ 注意轉接 ➔ 確認留言 ➔ 完成處理",
+vocab:[
+{zh:"客戶",pinyin:"kèhù",en:"client",exp:"和「接聽客戶電話」情境有關的常用詞。例如：我們需要注意客戶。"},{zh:"電話",pinyin:"diànhuà",en:"phone call",exp:"和「接聽客戶電話」情境有關的常用詞。例如：我們需要注意電話。"},{zh:"轉接",pinyin:"zhuǎnjiē",en:"transfer",exp:"和「接聽客戶電話」情境有關的常用詞。例如：我們需要注意轉接。"},{zh:"留言",pinyin:"liúyán",en:"message",exp:"和「接聽客戶電話」情境有關的常用詞。例如：我們需要注意留言。"},{zh:"回電",pinyin:"huídiàn",en:"call back",exp:"和「接聽客戶電話」情境有關的常用詞。例如：我們需要注意回電。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「接聽客戶電話」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+med_pharmacy:{title:"藥局買藥 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「藥局買藥」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下藥局的情況。",en:"y"},
+{zh:"B：好，我也注意到藥局需要處理。",en:" "},
+{zh:"A：那我們先討論藥師，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意症狀。",en:"t"},
+{zh:"A：好，另外處方也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認用法，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 可以 + 動詞 + 嗎？ (kěyǐ... ma?)",desc:"<strong>使用原則：</strong>禮貌詢問是否可以做某事。",example:"例句：<strong>可以</strong>一起確認<strong>嗎</strong>？"},
+{title:"2. 先 + 動詞，再 + 動詞 (xiān... zài...)",desc:"<strong>使用原則：</strong>說明事情的先後順序。",example:"例句：<strong>先</strong>確認資料，<strong>再</strong>決定。"}
+],
+mindmap:"<strong>心智圖：【藥局買藥】</strong><br>情境確認 ➔ 藥局 ➔ 藥師 ➔ 注意症狀 ➔ 確認處方 ➔ 完成處理",
+vocab:[
+{zh:"藥局",pinyin:"yàojú",en:"pharmacy",exp:"和「藥局買藥」情境有關的常用詞。例如：我們需要注意藥局。"},{zh:"藥師",pinyin:"yàoshī",en:"pharmacist",exp:"和「藥局買藥」情境有關的常用詞。例如：我們需要注意藥師。"},{zh:"症狀",pinyin:"zhèngzhuàng",en:"symptom",exp:"和「藥局買藥」情境有關的常用詞。例如：我們需要注意症狀。"},{zh:"處方",pinyin:"chǔfāng",en:"prescription",exp:"和「藥局買藥」情境有關的常用詞。例如：我們需要注意處方。"},{zh:"用法",pinyin:"yòngfǎ",en:"directions",exp:"和「藥局買藥」情境有關的常用詞。例如：我們需要注意用法。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「藥局買藥」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+med_bank:{title:"銀行開戶 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「銀行開戶」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下開戶的情況。",en:"y"},
+{zh:"B：好，我也注意到開戶需要處理。",en:" "},
+{zh:"A：那我們先討論存款，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意提款卡。",en:"t"},
+{zh:"A：好，另外證件也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認印章，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 要不要 + 動詞？ (yào bu yào...)",desc:"<strong>使用原則：</strong>口語提議或詢問對方意願。",example:"例句：<strong>要不要</strong>一起討論？"},
+{title:"2. 如果……就…… (rúguǒ... jiù...)",desc:"<strong>使用原則：</strong>表示條件與結果。",example:"例句：<strong>如果</strong>時間不夠，<strong>就</strong>先處理重要的。"}
+],
+mindmap:"<strong>心智圖：【銀行開戶】</strong><br>情境確認 ➔ 開戶 ➔ 存款 ➔ 注意提款卡 ➔ 確認證件 ➔ 完成處理",
+vocab:[
+{zh:"開戶",pinyin:"kāihù",en:"open an account",exp:"和「銀行開戶」情境有關的常用詞。例如：我們需要注意開戶。"},{zh:"存款",pinyin:"cúnkuǎn",en:"deposit",exp:"和「銀行開戶」情境有關的常用詞。例如：我們需要注意存款。"},{zh:"提款卡",pinyin:"tíkuǎnkǎ",en:"ATM card",exp:"和「銀行開戶」情境有關的常用詞。例如：我們需要注意提款卡。"},{zh:"證件",pinyin:"zhèngjiàn",en:"identification",exp:"和「銀行開戶」情境有關的常用詞。例如：我們需要注意證件。"},{zh:"印章",pinyin:"yìnzhāng",en:"seal",exp:"和「銀行開戶」情境有關的常用詞。例如：我們需要注意印章。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「銀行開戶」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+med_post:{title:"郵局寄件 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「郵局寄件」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下郵局的情況。",en:"y"},
+{zh:"B：好，我也注意到郵局需要處理。",en:" "},
+{zh:"A：那我們先討論寄件，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意包裹。",en:"t"},
+{zh:"A：好，另外掛號也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認郵資，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 除了……還…… (chúle... hái...)",desc:"<strong>使用原則：</strong>在原有項目之外再增加內容。",example:"例句：<strong>除了</strong>資料，<strong>還</strong>要確認時間。"},
+{title:"2. 比較 + 形容詞 (bǐjiào...)",desc:"<strong>使用原則：</strong>比較兩種選擇或情況。",example:"例句：這個方法<strong>比較</strong>方便。"}
+],
+mindmap:"<strong>心智圖：【郵局寄件】</strong><br>情境確認 ➔ 郵局 ➔ 寄件 ➔ 注意包裹 ➔ 確認掛號 ➔ 完成處理",
+vocab:[
+{zh:"郵局",pinyin:"yóujú",en:"post office",exp:"和「郵局寄件」情境有關的常用詞。例如：我們需要注意郵局。"},{zh:"寄件",pinyin:"jìjiàn",en:"send a parcel",exp:"和「郵局寄件」情境有關的常用詞。例如：我們需要注意寄件。"},{zh:"包裹",pinyin:"bāoguǒ",en:"package",exp:"和「郵局寄件」情境有關的常用詞。例如：我們需要注意包裹。"},{zh:"掛號",pinyin:"guàhào",en:"registered mail",exp:"和「郵局寄件」情境有關的常用詞。例如：我們需要注意掛號。"},{zh:"郵資",pinyin:"yóuzī",en:"postage",exp:"和「郵局寄件」情境有關的常用詞。例如：我們需要注意郵資。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「郵局寄件」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+med_hair:{title:"理髮店剪髮 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「理髮店剪髮」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下理髮店的情況。",en:"y"},
+{zh:"B：好，我也注意到理髮店需要處理。",en:" "},
+{zh:"A：那我們先討論剪髮，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意修短。",en:"t"},
+{zh:"A：好，另外瀏海也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認洗頭，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 可以 + 動詞 + 嗎？ (kěyǐ... ma?)",desc:"<strong>使用原則：</strong>禮貌詢問是否可以做某事。",example:"例句：<strong>可以</strong>一起確認<strong>嗎</strong>？"},
+{title:"2. 先 + 動詞，再 + 動詞 (xiān... zài...)",desc:"<strong>使用原則：</strong>說明事情的先後順序。",example:"例句：<strong>先</strong>確認資料，<strong>再</strong>決定。"}
+],
+mindmap:"<strong>心智圖：【理髮店剪髮】</strong><br>情境確認 ➔ 理髮店 ➔ 剪髮 ➔ 注意修短 ➔ 確認瀏海 ➔ 完成處理",
+vocab:[
+{zh:"理髮店",pinyin:"lǐfàdiàn",en:"barbershop",exp:"和「理髮店剪髮」情境有關的常用詞。例如：我們需要注意理髮店。"},{zh:"剪髮",pinyin:"jiǎnfà",en:"haircut",exp:"和「理髮店剪髮」情境有關的常用詞。例如：我們需要注意剪髮。"},{zh:"修短",pinyin:"xiūduǎn",en:"trim shorter",exp:"和「理髮店剪髮」情境有關的常用詞。例如：我們需要注意修短。"},{zh:"瀏海",pinyin:"liúhǎi",en:"bangs",exp:"和「理髮店剪髮」情境有關的常用詞。例如：我們需要注意瀏海。"},{zh:"洗頭",pinyin:"xǐtóu",en:"shampoo",exp:"和「理髮店剪髮」情境有關的常用詞。例如：我們需要注意洗頭。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「理髮店剪髮」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+ent_gym:{title:"健身房運動 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：嗨，關於「健身房運動」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下健身房的情況。",en:"y"},
+{zh:"B：好，我也注意到健身房需要處理。",en:" "},
+{zh:"A：那我們先討論會員，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意跑步機。",en:"t"},
+{zh:"A：好，另外重量也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認熱身，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 要不要 + 動詞？ (yào bu yào...)",desc:"<strong>使用原則：</strong>口語提議或詢問對方意願。",example:"例句：<strong>要不要</strong>一起討論？"},
+{title:"2. 如果……就…… (rúguǒ... jiù...)",desc:"<strong>使用原則：</strong>表示條件與結果。",example:"例句：<strong>如果</strong>時間不夠，<strong>就</strong>先處理重要的。"}
+],
+mindmap:"<strong>心智圖：【健身房運動】</strong><br>情境確認 ➔ 健身房 ➔ 會員 ➔ 注意跑步機 ➔ 確認重量 ➔ 完成處理",
+vocab:[
+{zh:"健身房",pinyin:"jiànshēnfáng",en:"gym",exp:"和「健身房運動」情境有關的常用詞。例如：我們需要注意健身房。"},{zh:"會員",pinyin:"huìyuán",en:"member",exp:"和「健身房運動」情境有關的常用詞。例如：我們需要注意會員。"},{zh:"跑步機",pinyin:"pǎobùjī",en:"treadmill",exp:"和「健身房運動」情境有關的常用詞。例如：我們需要注意跑步機。"},{zh:"重量",pinyin:"zhòngliàng",en:"weight",exp:"和「健身房運動」情境有關的常用詞。例如：我們需要注意重量。"},{zh:"熱身",pinyin:"rèshēn",en:"warm up",exp:"和「健身房運動」情境有關的常用詞。例如：我們需要注意熱身。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「健身房運動」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+ent_gather:{title:"朋友聚會 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「朋友聚會」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下聚會的情況。",en:"y"},
+{zh:"B：好，我也注意到聚會需要處理。",en:" "},
+{zh:"A：那我們先討論約定，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意地點。",en:"t"},
+{zh:"A：好，另外準時也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認聊天，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 除了……還…… (chúle... hái...)",desc:"<strong>使用原則：</strong>在原有項目之外再增加內容。",example:"例句：<strong>除了</strong>資料，<strong>還</strong>要確認時間。"},
+{title:"2. 比較 + 形容詞 (bǐjiào...)",desc:"<strong>使用原則：</strong>比較兩種選擇或情況。",example:"例句：這個方法<strong>比較</strong>方便。"}
+],
+mindmap:"<strong>心智圖：【朋友聚會】</strong><br>情境確認 ➔ 聚會 ➔ 約定 ➔ 注意地點 ➔ 確認準時 ➔ 完成處理",
+vocab:[
+{zh:"聚會",pinyin:"jùhuì",en:"gathering",exp:"和「朋友聚會」情境有關的常用詞。例如：我們需要注意聚會。"},{zh:"約定",pinyin:"yuēdìng",en:"arrange",exp:"和「朋友聚會」情境有關的常用詞。例如：我們需要注意約定。"},{zh:"地點",pinyin:"dìdiǎn",en:"location",exp:"和「朋友聚會」情境有關的常用詞。例如：我們需要注意地點。"},{zh:"準時",pinyin:"zhǔnshí",en:"on time",exp:"和「朋友聚會」情境有關的常用詞。例如：我們需要注意準時。"},{zh:"聊天",pinyin:"liáotiān",en:"chat",exp:"和「朋友聚會」情境有關的常用詞。例如：我們需要注意聊天。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「朋友聚會」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+ent_neighbor:{title:"鄰居打招呼 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨，關於「鄰居打招呼」，你現在方便聊一下嗎？",en:"p"},
+{zh:"B：可以啊，怎麼了？",en:"a"},
+{zh:"A：我想先確認一下鄰居的情況。",en:"y"},
+{zh:"B：好，我也注意到鄰居需要處理。",en:" "},
+{zh:"A：那我們先討論打招呼，你覺得怎麼樣？",en:"a"},
+{zh:"B：可以。我覺得還要注意搬來。",en:"t"},
+{zh:"A：好，另外附近也不能忘記。",en:"t"},
+{zh:"B：沒問題，我們一起確認互相，再決定下一步。",en:"e"},
+{zh:"A：好，那就照這個方式做，謝謝你的幫忙。",en:"n"},
+{zh:"B：不客氣，希望事情順利！",en:"t"}
+],
+grammar:[
+{title:"1. 可以 + 動詞 + 嗎？ (kěyǐ... ma?)",desc:"<strong>使用原則：</strong>禮貌詢問是否可以做某事。",example:"例句：<strong>可以</strong>一起確認<strong>嗎</strong>？"},
+{title:"2. 先 + 動詞，再 + 動詞 (xiān... zài...)",desc:"<strong>使用原則：</strong>說明事情的先後順序。",example:"例句：<strong>先</strong>確認資料，<strong>再</strong>決定。"}
+],
+mindmap:"<strong>心智圖：【鄰居打招呼】</strong><br>情境確認 ➔ 鄰居 ➔ 打招呼 ➔ 注意搬來 ➔ 確認附近 ➔ 完成處理",
+vocab:[
+{zh:"鄰居",pinyin:"línjū",en:"neighbor",exp:"和「鄰居打招呼」情境有關的常用詞。例如：我們需要注意鄰居。"},{zh:"打招呼",pinyin:"dǎ zhāohu",en:"greet",exp:"和「鄰居打招呼」情境有關的常用詞。例如：我們需要注意打招呼。"},{zh:"搬來",pinyin:"bānlái",en:"move in",exp:"和「鄰居打招呼」情境有關的常用詞。例如：我們需要注意搬來。"},{zh:"附近",pinyin:"fùjìn",en:"nearby",exp:"和「鄰居打招呼」情境有關的常用詞。例如：我們需要注意附近。"},{zh:"互相",pinyin:"hùxiāng",en:"each other",exp:"和「鄰居打招呼」情境有關的常用詞。例如：我們需要注意互相。"},{zh:"今天",pinyin:"jīntiān",en:"today",exp:"常用生活詞彙。例如：這件事今天嗎？"},{zh:"一起",pinyin:"yìqǐ",en:"together",exp:"常用生活詞彙。例如：這件事一起嗎？"},{zh:"需要",pinyin:"xūyào",en:"need",exp:"常用生活詞彙。例如：這件事需要嗎？"},{zh:"問題",pinyin:"wèntí",en:"question",exp:"常用生活詞彙。例如：這件事問題嗎？"},{zh:"時間",pinyin:"shíjiān",en:"time",exp:"常用生活詞彙。例如：這件事時間嗎？"},{zh:"地方",pinyin:"dìfāng",en:"place",exp:"常用生活詞彙。例如：這件事地方嗎？"},{zh:"方便",pinyin:"fāngbiàn",en:"convenient",exp:"常用生活詞彙。例如：這件事方便嗎？"},{zh:"謝謝",pinyin:"xièxie",en:"thanks",exp:"常用生活詞彙。例如：這件事謝謝嗎？"},{zh:"可以",pinyin:"kěyǐ",en:"can",exp:"常用生活詞彙。例如：這件事可以嗎？"},{zh:"注意",pinyin:"zhùyì",en:"pay attention",exp:"常用生活詞彙。例如：這件事注意嗎？"}
+],
+questions:["1. 這個情境主要要處理什麼問題？","2. 對話中提到哪些和「鄰居打招呼」有關的詞語？","3. 如果是你，你會怎麼處理這個情況？"]},
+dorm_meet:{title:"🏢 室友初次見面 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：嗨！你是新來的室友嗎？我叫小美。",en:"A: Hi! Are you the new roommate? I'm Xiaomei."},
+{zh:"B：對啊，我叫阿明，從馬來西亞來的。請多指教！",en:"B: Yes, I'm Amin, from Malaysia. Nice to meet you!"},
+{zh:"A：歡迎！你的家鄉有什麼好吃的？",en:"A: Welcome! What good food is there in your hometown?"},
+{zh:"B：我們那邊的椰漿飯很有名，超香的。",en:"B: Our nasi lemak is famous, super fragrant."},
+{zh:"A：聽起來好棒！台灣的夜市你一定要去吃。",en:"A: Sounds great! You must try Taiwan's night markets."},
+{zh:"B：好啊！你住這裡多久了？",en:"B: Sure! How long have you lived here?"},
+{zh:"A：我已經住一年了，有問題都可以問我。",en:"A: I've lived here for a year. Feel free to ask me anything."},
+{zh:"B：太好了，謝謝你！晚上要不要一起吃晚餐？",en:"B: Great, thanks! Want to have dinner together tonight?"},
+{zh:"A：好啊，我知道附近有一家超好吃的滷肉飯。",en:"A: Yeah, I know a super good braised pork rice place nearby."},
+{zh:"B：那太完美了，晚上見！",en:"B: Perfect, see you tonight!"}
+],
+grammar:[
+{title:"1. 請多指教 (qǐng duō zhǐjiào)",desc:"<strong>使用原則：</strong>初次見面時的客氣用語，表示希望對方多多教導自己。",example:"例句：我叫阿明，<strong>請多指教</strong>！"},
+{title:"2. 要不要 + 動詞？ (yào bu yào...)",desc:"<strong>使用原則：</strong>口語中提議或詢問意願，語氣輕鬆自然。",example:"例句：晚上<strong>要不要</strong>一起吃晚餐？"}
+],
+mindmap:"<strong>心智圖：【室友初次見面】</strong><br>自我介紹 ➔ 家鄉與食物 ➔ 生活經驗分享 ➔ 約一起吃飯",
+vocab:[
+{zh:"室友",pinyin:"shìyǒu",en:"roommate",exp:"和你住同一間宿舍的人。例如：我的室友很友善。"},
+{zh:"請多指教",pinyin:"qǐng duō zhǐjiào",en:"please guide me",exp:"初次見面的客氣話。例如：我是新生，請多指教。"},
+{zh:"家鄉",pinyin:"jiāxiāng",en:"hometown",exp:"自己出生或長大的地方。例如：你的家鄉在哪裡？"},
+{zh:"夜市",pinyin:"yèshì",en:"night market",exp:"晚上賣小吃的地方。例如：台灣夜市很有名。"},
+{zh:"滷肉飯",pinyin:"lǔròu fàn",en:"braised pork rice",exp:"台灣經典小吃。例如：這家滷肉飯超好吃。"},
+{zh:"有名",pinyin:"yǒumíng",en:"famous",exp:"很多人知道。例如：椰漿飯很有名。"},
+{zh:"附近",pinyin:"fùjìn",en:"nearby",exp:"離這裡不遠。例如：附近有一家餐廳。"},
+{zh:"晚餐",pinyin:"wǎncān",en:"dinner",exp:"晚上吃的飯。例如：一起吃晚餐吧。"},
+{zh:"住",pinyin:"zhù",en:"to live",exp:"居住。例如：我住這裡一年了。"},
+{zh:"歡迎",pinyin:"huānyíng",en:"welcome",exp:"高興地接受別人到來。例如：歡迎來台灣！"}
+],
+questions:["1. 阿明是從哪個國家來的？","2. 小美推薦阿明去哪裡吃東西？","3. 你第一次見到室友時會說什麼？"]},
+
+dorm_rules:{title:"🏢 制定住宿公約 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：我們來訂一下宿舍公約好不好？",en:"A: Shall we set some dorm rules?"},
+{zh:"B：好啊，先從冷氣開始吧。",en:"B: Sure, let's start with the air-con."},
+{zh:"A：冷氣晚上十一點前可以開，之後就關，省電費。",en:"A: A/C can be on until 11 p.m., then off to save electricity."},
+{zh:"B：可以。那垃圾呢？輪流丟好了。",en:"B: Okay. What about trash? Let's take turns."},
+{zh:"A：每週一三五我丟，二四六你丟，可以嗎？",en:"A: I take Mon/Wed/Fri, you take Tue/Thu/Sat, okay?"},
+{zh:"B：沒問題。公共區域要保持乾淨喔。",en:"B: No problem. Keep the common area clean."},
+{zh:"A：對，洗完澡要把地板擦乾。",en:"A: Yes, wipe the floor dry after showering."},
+{zh:"B：還有，晚上十二點後小聲一點，不要影響別人睡覺。",en:"B: Also, after midnight keep the volume down so others can sleep."},
+{zh:"A：好，我們把這些寫在紙上貼起來。",en:"A: Okay, let's write these down and put them up."},
+{zh:"B：太好了，這樣大家比較好相處。",en:"B: Great, this way everyone gets along better."}
+],
+grammar:[
+{title:"1. ……好不好？ (hǎo bu hǎo?)",desc:"<strong>使用原則：</strong>徵求同意的口語說法，語氣友善。",example:"例句：我們來訂公約<strong>好不好</strong>？"},
+{title:"2. 輪流 + 動詞 (lúnliú...)",desc:"<strong>使用原則：</strong>表示大家輪著做同一件事。",example:"例句：垃圾<strong>輪流</strong>丟好了。"}
+],
+mindmap:"<strong>心智圖：【住宿公約】</strong><br>冷氣時間 ➔ 垃圾輪流 ➔ 公共清潔 ➔ 夜間安靜",
+vocab:[
+{zh:"公約",pinyin:"gōngyuē",en:"agreement / rules",exp:"大家一起訂的規則。例如：宿舍公約。"},
+{zh:"冷氣",pinyin:"lěngqì",en:"air-conditioning",exp:"冷氣機。例如：晚上十一點關冷氣。"},
+{zh:"省電費",pinyin:"shěng diànfèi",en:"save electricity bill",exp:"少用電，少付錢。例如：關冷氣可以省電費。"},
+{zh:"輪流",pinyin:"lúnliú",en:"take turns",exp:"一個接著一個做。例如：我們輪流丟垃圾。"},
+{zh:"公共區域",pinyin:"gōnggòng qūyù",en:"common area",exp:"大家一起用的地方。例如：保持公共區域乾淨。"},
+{zh:"擦乾",pinyin:"cā gān",en:"wipe dry",exp:"用布把水擦掉。例如：把地板擦乾。"},
+{zh:"小聲",pinyin:"xiǎoshēng",en:"quietly / low volume",exp:"聲音放小。例如：晚上要小聲一點。"},
+{zh:"影響",pinyin:"yǐngxiǎng",en:"affect",exp:"對別人造成改變。例如：不要影響別人睡覺。"},
+{zh:"相處",pinyin:"xiāngchǔ",en:"get along",exp:"一起生活、互動。例如：大家比較好相處。"},
+{zh:"貼起來",pinyin:"tiē qǐlái",en:"put up / stick up",exp:"用膠帶貼在牆上。例如：把公約貼起來。"}
+],
+questions:["1. 冷氣最晚可以開到幾點？","2. 垃圾怎麼分配？","3. 你覺得宿舍最重要的公約是什麼？"]},
+
+dorm_laundry:{title:"🏢 宿舍洗衣服 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：不好意思，可以借一下洗衣精嗎？我的用完了。",en:"A: Excuse me, can I borrow some detergent? Mine is finished."},
+{zh:"B：可以啊，在洗手台旁邊，你自己拿。",en:"B: Sure, it's by the sink, just take it."},
+{zh:"A：謝謝！對了，洗衣機好像壞掉了。",en:"A: Thanks! By the way, the washing machine seems broken."},
+{zh:"B：真的嗎？我剛剛也洗不了。",en:"B: Really? I couldn't use it either just now."},
+{zh:"A：要向誰報修啊？",en:"A: Who should we report it to?"},
+{zh:"B：跟宿管說就好，他會叫人來修。",en:"B: Just tell the dorm manager, he'll call someone to fix it."},
+{zh:"A：宿管辦公室在幾樓？",en:"A: Which floor is the dorm office on?"},
+{zh:"B：一樓進門左邊。你要現在去嗎？",en:"B: First floor, left after the entrance. Going now?"},
+{zh:"A：對，我先去報修，謝謝你！",en:"A: Yes, I'll go report it first. Thanks!"},
+{zh:"B：不客氣，修好了再一起洗衣服。",en:"B: You're welcome. Let's do laundry together after it's fixed."}
+],
+grammar:[
+{title:"1. 可以 + 動詞 + 嗎？ (kěyǐ... ma?)",desc:"<strong>使用原則：</strong>禮貌地請求許可。",example:"例句：<strong>可以</strong>借一下洗衣精<strong>嗎</strong>？"},
+{title:"2. 向 + 人 + 動詞 (xiàng + sb + V)",desc:"<strong>使用原則：</strong>表示對某人做某個動作，如報修、詢問。",example:"例句：要<strong>向</strong>誰報修啊？"}
+],
+mindmap:"<strong>心智圖：【宿舍洗衣】</strong><br>借洗衣精 ➔ 發現故障 ➔ 找宿管報修 ➔ 修好後再洗",
+vocab:[
+{zh:"洗衣精",pinyin:"xǐyī jīng",en:"detergent",exp:"洗衣服用的清潔劑。例如：可以借洗衣精嗎？"},
+{zh:"用完",pinyin:"yòng wán",en:"used up",exp:"全部用光了。例如：我的洗衣精用完了。"},
+{zh:"洗衣機",pinyin:"xǐyījī",en:"washing machine",exp:"洗衣服的機器。例如：洗衣機壞掉了。"},
+{zh:"壞掉",pinyin:"huài diào",en:"broken",exp:"不能用了。例如：機器壞掉了。"},
+{zh:"報修",pinyin:"bàoxiū",en:"report for repair",exp:"告訴別人來修理。例如：向宿管報修。"},
+{zh:"宿管",pinyin:"sùguǎn",en:"dorm manager",exp:"管理宿舍的人。例如：跟宿管說。"},
+{zh:"辦公室",pinyin:"bàngōngshì",en:"office",exp:"工作的房間。例如：宿管辦公室在一樓。"},
+{zh:"洗手間",pinyin:"xǐshǒujiān",en:"bathroom",exp:"洗手的地方。"},
+{zh:"不客氣",pinyin:"bú kèqì",en:"you're welcome",exp:"回應謝謝的話。例如：不客氣。"},
+{zh:"修好",pinyin:"xiū hǎo",en:"fixed",exp:"修理完成。例如：修好了再洗。"}
+],
+questions:["1. A 為什麼要借洗衣精？","2. 洗衣機壞了要跟誰說？","3. 你洗衣服時遇過什麼問題？"]},
+
+campus_group:{title:"🏫 分組報告找組員 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：請問這組還缺人嗎？我想加入。",en:"A: Excuse me, does this group still need people? I'd like to join."},
+{zh:"B：還缺一位，你是哪個系的？",en:"B: We still need one. Which department are you from?"},
+{zh:"A：我是應華系的，華語是我的強項。",en:"A: I'm from Applied Chinese. Chinese is my strength."},
+{zh:"B：太好了！我們正好需要會華語的人。",en:"B: Perfect! We just need someone good at Chinese."},
+{zh:"A：那我可以負責資料蒐集和簡報。",en:"A: Then I can handle research and the presentation."},
+{zh:"B：好啊，我們交換 LINE 吧。",en:"B: Sure, let's exchange LINE."},
+{zh:"A：這是我的 QR Code，你掃一下。",en:"A: Here's my QR code, scan it."},
+{zh:"B：加到了。我們什麼時候討論主題？",en:"B: Added. When shall we discuss the topic?"},
+{zh:"A：明天下午兩點，圖書館一樓可以嗎？",en:"A: Tomorrow 2 p.m. at the library first floor, okay?"},
+{zh:"B：可以，到時候見！",en:"B: Okay, see you then!"}
+],
+grammar:[
+{title:"1. 還缺 + 數量 (hái quē...)",desc:"<strong>使用原則：</strong>表示還需要多少人或東西。",example:"例句：這組<strong>還缺</strong>一位。"},
+{title:"2. 負責 + 事情 (fùzé...)",desc:"<strong>使用原則：</strong>表示某人擔任某項工作。",example:"例句：我可以<strong>負責</strong>資料蒐集。"}
+],
+mindmap:"<strong>心智圖：【找組員】</strong><br>詢問缺人 ➔ 自我介紹專長 ➔ 交換聯絡 ➔ 約討論時間",
+vocab:[
+{zh:"分組",pinyin:"fēnzǔ",en:"form groups",exp:"分成小組。例如：這堂課要分組報告。"},
+{zh:"組員",pinyin:"zǔyuán",en:"group member",exp:"小組裡的人。例如：我們還缺一位組員。"},
+{zh:"缺人",pinyin:"quē rén",en:"need more people",exp:"還少人。例如：還缺人嗎？"},
+{zh:"強項",pinyin:"qiángxiàng",en:"strength",exp:"自己擅長的。例如：華語是我的強項。"},
+{zh:"負責",pinyin:"fùzé",en:"be in charge of",exp:"擔任某工作。例如：我負責簡報。"},
+{zh:"簡報",pinyin:"jiǎnbào",en:"presentation",exp:"用投影片報告。"},
+{zh:"交換",pinyin:"jiāohuàn",en:"exchange",exp:"互相給對方。例如：交換 LINE。"},
+{zh:"QR Code",pinyin:"QR Code",en:"QR code",exp:"可用手機掃描的碼。"},
+{zh:"討論",pinyin:"tǎolùn",en:"discuss",exp:"一起商量。例如：討論主題。"},
+{zh:"到時候見",pinyin:"dào shíhòu jiàn",en:"see you then",exp:"約好後的道別。"}
+],
+questions:["1. A 的強項是什麼？","2. 他們用什麼方式交換聯絡方式？","3. 你分組時通常負責什麼工作？"]},
+
+campus_library:{title:"🏫 圖書館搶座位 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：這裡有插座嗎？我筆電快沒電了。",en:"A: Is there a power outlet here? My laptop is almost dead."},
+{zh:"B：有，在桌子下面，你看。",en:"B: Yes, under the table, look."},
+{zh:"A：太好了！這個位子可以坐嗎？",en:"A: Great! Can I sit here?"},
+{zh:"B：可以，我朋友剛走。",en:"B: Sure, my friend just left."},
+{zh:"A：謝謝。不好意思，可以幫我看一下東西嗎？我去一下洗手間。",en:"A: Thanks. Can you watch my stuff? I need the restroom."},
+{zh:"B：沒問題，你去吧。",en:"B: No problem, go ahead."},
+{zh:"A：（回來）謝謝你。這裡通常都滿嗎？",en:"A: (returns) Thanks. Is it usually full here?"},
+{zh:"B：期末考前超滿，要早一點來才有位子。",en:"B: Super full before finals, come early."},
+{zh:"A：原來如此。你也在準備考試嗎？",en:"A: I see. Preparing for exams too?"},
+{zh:"B：對啊，一起加油！",en:"B: Yeah, let's work hard together!"}
+],
+grammar:[
+{title:"1. 可以幫我 + 動詞嗎？ (kěyǐ bāng wǒ... ma?)",desc:"<strong>使用原則：</strong>禮貌請人幫忙。",example:"例句：<strong>可以幫我</strong>看一下東西<strong>嗎</strong>？"},
+{title:"2. 原來如此 (yuánlái rúcǐ)",desc:"<strong>使用原則：</strong>聽懂原因後表示「我懂了」。",example:"例句：<strong>原來如此</strong>。要早一點來。"}
+],
+mindmap:"<strong>心智圖：【圖書館搶位】</strong><br>找插座 ➔ 確認位子 ➔ 請人看管 ➔ 期末人潮",
+vocab:[
+{zh:"插座",pinyin:"chāzuò",en:"power outlet",exp:"插電線的地方。"},
+{zh:"筆電",pinyin:"bǐdiàn",en:"laptop",exp:"筆記型電腦。"},
+{zh:"位子",pinyin:"wèizi",en:"seat",exp:"可以坐的位置。"},
+{zh:"看管",pinyin:"kānguǎn",en:"watch / look after",exp:"幫忙看著東西。"},
+{zh:"洗手間",pinyin:"xǐshǒujiān",en:"restroom",exp:"上廁所的地方。"},
+{zh:"期末考",pinyin:"qīmò kǎo",en:"final exam",exp:"學期結束的考試。"},
+{zh:"超滿",pinyin:"chāo mǎn",en:"super full",exp:"非常滿。"},
+{zh:"原來如此",pinyin:"yuánlái rúcǐ",en:"I see",exp:"了解原因後的反應。"},
+{zh:"準備",pinyin:"zhǔnbèi",en:"prepare",exp:"為某事做準備。"},
+{zh:"加油",pinyin:"jiāyóu",en:"go for it",exp:"鼓勵別人。"}
+],
+questions:["1. A 為什麼需要插座？","2. 期末考前圖書館為什麼要早到？","3. 你在圖書館最常做什麼？"]},
+
+social_cafeteria:{title:"🍔 學生餐廳吃午餐 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：中午要吃什麼？人好多喔。",en:"A: What shall we eat? So many people."},
+{zh:"B：我想吃排骨飯，你呢？",en:"B: I want pork rib rice. How about you?"},
+{zh:"A：我吃牛肉麵好了。要不要我去排隊，你佔位子？",en:"A: I'll have beef noodle. Shall I queue while you save seats?"},
+{zh:"B：好啊，那我先去那邊坐。",en:"B: Okay, I'll go sit over there."},
+{zh:"A：（排隊後）排骨飯跟牛肉麵都好了，還有湯。",en:"A: (after queue) Both ready, plus soup."},
+{zh:"B：謝謝！今天的排骨好大一塊。",en:"B: Thanks! The rib is huge today."},
+{zh:"A：對啊，超划算。你下午有課嗎？",en:"A: Yeah, super worth it. Class this afternoon?"},
+{zh:"B：有，兩點的英文課。你要一起走嗎？",en:"B: Yes, English at 2. Walk together?"},
+{zh:"A：好，吃完再走。這湯可以續嗎？",en:"A: Sure. Can we refill the soup?"},
+{zh:"B：可以，去那邊自己裝就好。",en:"B: Yes, just fill it yourself over there."}
+],
+grammar:[
+{title:"1. 要不要我 + 動詞？ (yào bu yào wǒ...)",desc:"<strong>使用原則：</strong>提議自己幫忙做某事。",example:"例句：<strong>要不要我</strong>去排隊？"},
+{title:"2. 超 + 形容詞 (chāo...)",desc:"<strong>使用原則：</strong>台灣年輕人常用的強調語氣，等於「非常」。",example:"例句：<strong>超</strong>划算。"}
+],
+mindmap:"<strong>心智圖：【學生餐廳】</strong><br>討論吃什麼 ➔ 排隊與佔位 ➔ 評價菜色 ➔ 約一起上課",
+vocab:[
+{zh:"排骨飯",pinyin:"páigǔ fàn",en:"pork rib rice",exp:"學生餐廳常見主食。"},
+{zh:"牛肉麵",pinyin:"niúròu miàn",en:"beef noodle soup",exp:"台灣招牌麵食。"},
+{zh:"排隊",pinyin:"páiduì",en:"queue",exp:"依序等候。"},
+{zh:"佔位子",pinyin:"zhàn wèizi",en:"save seats",exp:"先坐好位置等別人。"},
+{zh:"划算",pinyin:"huásuàn",en:"worth the money",exp:"價錢合理、很值。"},
+{zh:"續",pinyin:"xù",en:"refill",exp:"再加一次湯或飲料。"},
+{zh:"裝",pinyin:"zhuāng",en:"fill",exp:"把東西放進容器。"},
+{zh:"一起走",pinyin:"yìqǐ zǒu",en:"walk together",exp:"結伴同行。"},
+{zh:"人好多",pinyin:"rén hǎo duō",en:"so many people",exp:"人潮多。"},
+{zh:"好了",pinyin:"hǎo le",en:"ready",exp:"完成了。"}
+],
+questions:["1. 誰去排隊？誰佔位子？","2. 「超划算」是什麼意思？","3. 你學校餐廳最常吃什麼？"]},
+
+social_club:{title:"🍔 加入社團博覽會 (TOCFL A1-A2)",
+dialogues:[
+{zh:"A：學長好，請問這是什麼社團？",en:"A: Hello senior, what club is this?"},
+{zh:"B：我們是熱音社，每週有社課練團。",en:"B: Hot Music Club. We practice every week."},
+{zh:"A：聽起來很有趣！社課在哪裡？",en:"A: Sounds fun! Where are the classes?"},
+{zh:"B：在學生活動中心三樓，晚上七點到九點。",en:"B: Student Activity Center 3F, 7 to 9 p.m."},
+{zh:"A：會不會很難？我是新手。",en:"A: Is it hard? I'm a beginner."},
+{zh:"B：不會，我們有教學，慢慢學就好。",en:"B: No, we teach. Just learn step by step."},
+{zh:"A：那我可以加入嗎？要填什麼？",en:"A: Can I join? What do I fill out?"},
+{zh:"B：填這張入會單就好，再加我們的社團 LINE。",en:"B: Just this membership form and join our LINE."},
+{zh:"A：好的，我現在填。謝謝學長！",en:"A: Okay, filling now. Thanks!"},
+{zh:"B：歡迎加入！下週社課見。",en:"B: Welcome! See you next week."}
+],
+grammar:[
+{title:"1. 請問……？ (qǐngwèn...)",desc:"<strong>使用原則：</strong>禮貌詢問，適合向學長姐或陌生人。",example:"例句：<strong>請問</strong>這是什麼社團？"},
+{title:"2. 會不會 + 形容詞？ (huì bu huì...)",desc:"<strong>使用原則：</strong>詢問是否有某種情況，語氣緩和。",example:"例句：<strong>會不會</strong>很難？"}
+],
+mindmap:"<strong>心智圖：【社團博覽會】</strong><br>詢問社團 ➔ 社課時間地點 ➔ 新手顧慮 ➔ 填入會單",
+vocab:[
+{zh:"社團",pinyin:"shètuán",en:"club",exp:"學生課外活動組織。"},
+{zh:"學長",pinyin:"xuézhǎng",en:"senior (male)",exp:"年級比較高的男同學。"},
+{zh:"社課",pinyin:"shèkè",en:"club practice",exp:"社團的課程或練習。"},
+{zh:"練團",pinyin:"liàn tuán",en:"band practice",exp:"樂團一起練習。"},
+{zh:"新手",pinyin:"xīnshǒu",en:"beginner",exp:"剛開始學的人。"},
+{zh:"入會單",pinyin:"rùhuì dān",en:"membership form",exp:"加入社團要填的表格。"},
+{zh:"活動中心",pinyin:"huódòng zhōngxīn",en:"activity center",exp:"學生活動的大樓。"},
+{zh:"教學",pinyin:"jiàoxué",en:"teaching",exp:"有人教。"},
+{zh:"歡迎加入",pinyin:"huānyíng jiārù",en:"welcome to join",exp:"邀請別人進來。"},
+{zh:"博覽會",pinyin:"bólǎnhuì",en:"expo / fair",exp:"展示很多社團的活動。"}
+],
+questions:["1. 熱音社的社課在幾點、哪裡？","2. 加入社團要做什麼？","3. 你想加入什麼類型的社團？"]},
+
+shop_tea:{title:"🥤 手搖飲料店 (TOCFL A2-B1)",
+dialogues:[
+{zh:"店員：你好！請問今天想喝什麼？",en:"Clerk: Hello! What would you like today?"},
+{zh:"顧客：我要一杯珍珠奶茶，請問有推薦的甜度嗎？",en:"Customer: A boba milk tea. Any recommended sweetness?"},
+{zh:"店員：我們的珍珠本身有甜味，建議點微糖就好。",en:"Clerk: Our boba is already sweet, I recommend slight sweetness."},
+{zh:"顧客：好，那就微糖、少冰，謝謝。",en:"Customer: Okay, slight sweetness and less ice, thanks."},
+{zh:"店員：需要加其他配料嗎？椰果或仙草都可以。",en:"Clerk: Any toppings? Coconut jelly or grass jelly?"},
+{zh:"顧客：不用了，這樣就好。另外再一杯熱的黑糖鮮奶。",en:"Customer: No thanks. Also one hot brown sugar fresh milk."},
+{zh:"店員：黑糖鮮奶甜度是固定的喔，一共120元。",en:"Clerk: Fixed sweetness. Total 120 NTD."},
+{zh:"顧客：可以行動支付嗎？發票幫我存載具。",en:"Customer: Mobile payment? Save invoice to my carrier."},
+{zh:"店員：可以，請掃這邊的QR Code。",en:"Clerk: Sure, scan this QR code."},
+{zh:"顧客：好了，謝謝！",en:"Customer: Done, thanks!"}
+],
+grammar:[
+{title:"1. 建議 + 動詞 (jiànyì...)",desc:"<strong>使用原則：</strong>客氣地提出推薦，比「要」委婉。",example:"例句：<strong>建議</strong>點微糖就好。"},
+{title:"2. 另外 + 再 (lìngwài zài...)",desc:"<strong>使用原則：</strong>在原有項目外再增加。",example:"例句：<strong>另外再</strong>一杯熱的黑糖鮮奶。"}
+],
+mindmap:"<strong>心智圖：【手搖飲料】</strong><br>點飲品 ➔ 甜度冰塊 ➔ 配料選擇 ➔ 行動支付與載具",
+vocab:[
+{zh:"珍珠奶茶",pinyin:"zhēnzhū nǎichá",en:"boba milk tea",exp:"台灣經典飲料。"},
+{zh:"微糖",pinyin:"wéi táng",en:"slight sweetness",exp:"約30%糖。"},
+{zh:"少冰",pinyin:"shǎo bīng",en:"less ice",exp:"冰塊少一點。"},
+{zh:"配料",pinyin:"pèiliào",en:"toppings",exp:"加在飲料裡的料。"},
+{zh:"固定",pinyin:"gùdìng",en:"fixed",exp:"不能改。"},
+{zh:"行動支付",pinyin:"xíngdòng zhīfù",en:"mobile payment",exp:"用手機付錢。"},
+{zh:"載具",pinyin:"zàijù",en:"e-invoice carrier",exp:"存電子發票的條碼。"},
+{zh:"推薦",pinyin:"tuījiàn",en:"recommend",exp:"介紹好的選擇。"},
+{zh:"黑糖鮮奶",pinyin:"hēitáng xiānnǎi",en:"brown sugar fresh milk",exp:"用黑糖和鮮奶做的飲料。"},
+{zh:"掃",pinyin:"sǎo",en:"scan",exp:"用手機掃描。"}
+],
+questions:["1. 顧客點了什麼甜度和冰塊？","2. 黑糖鮮奶的甜度可以改嗎？","3. 你最常點什麼甜度和冰塊？"]},
+
+shop_market:{title:"🛒 菜市場買菜 (TOCFL A2-B1)",
+dialogues:[
+{zh:"老闆：小姐，要買什麼？青菜很新鮮喔！",en:"Vendor: Miss, what would you like? Greens are fresh!"},
+{zh:"顧客：小白菜怎麼賣？",en:"Customer: How much is the bok choy?"},
+{zh:"老闆：一斤三十，今天特價二十五。",en:"Vendor: 30 per jin, special 25 today."},
+{zh:"顧客：那給我半斤，再兩顆番茄。",en:"Customer: Half a jin, plus two tomatoes."},
+{zh:"老闆：番茄很甜，三顆五十比較划算。",en:"Vendor: Tomatoes are sweet, three for 50 is better."},
+{zh:"顧客：好，三顆。有雞蛋嗎？",en:"Customer: Okay, three. Do you have eggs?"},
+{zh:"老闆：有，一盒十顆六十元。",en:"Vendor: Yes, box of ten for 60."},
+{zh:"顧客：好。全部多少？",en:"Customer: Okay. How much total?"},
+{zh:"老闆：青菜十二點五、番茄五十、蛋六十，一共一百二十二點五，算你一百二十。",en:"Vendor: 12.5 + 50 + 60 = 122.5, make it 120."},
+{zh:"顧客：謝謝老闆，找你一百五。",en:"Customer: Thanks, here's 150."}
+],
+grammar:[
+{title:"1. 怎麼賣？ (zěnme mài?)",desc:"<strong>使用原則：</strong>市場問價最自然的說法。",example:"例句：小白菜<strong>怎麼賣</strong>？"},
+{title:"2. 算你 + 價格 (suàn nǐ...)",desc:"<strong>使用原則：</strong>老闆主動少算一點，表示給優惠。",example:"例句：一共一百二十二，<strong>算你</strong>一百二十。"}
+],
+mindmap:"<strong>心智圖：【菜市場】</strong><br>問價 ➔ 特價與殺價 ➔ 加購 ➔ 結帳找錢",
+vocab:[
+{zh:"怎麼賣",pinyin:"zěnme mài",en:"how much",exp:"問價錢。"},
+{zh:"一斤",pinyin:"yì jīn",en:"one jin (~600g)",exp:"台灣常用重量單位。"},
+{zh:"特價",pinyin:"tèjià",en:"special price",exp:"特別便宜。"},
+{zh:"半斤",pinyin:"bàn jīn",en:"half a jin",exp:"一半的重量。"},
+{zh:"划算",pinyin:"huásuàn",en:"good value",exp:"很值得。"},
+{zh:"一共",pinyin:"yígòng",en:"in total",exp:"全部加起來。"},
+{zh:"新鮮",pinyin:"xīnxiān",en:"fresh",exp:"剛採的、很新。"},
+{zh:"找",pinyin:"zhǎo",en:"give change",exp:"付錢後找回來的錢。"},
+{zh:"小白菜",pinyin:"xiǎo báicài",en:"bok choy",exp:"常見青菜。"},
+{zh:"番茄",pinyin:"fānqié",en:"tomato",exp:"紅色蔬果。"}
+],
+questions:["1. 小白菜今天特價多少錢一斤？","2. 老闆最後收多少錢？","3. 你在市場怎麼問價錢？"]},
+
+shop_convenience:{title:"🏪 便利商店 (TOCFL A2-B1)",
+dialogues:[
+{zh:"店員：您好，請問需要什麼？",en:"Clerk: Hello, what do you need?"},
+{zh:"顧客：我要取網購的包裹，這是條碼。",en:"Customer: Picking up an online package. Here's the barcode."},
+{zh:"店員：好的，請稍等……找到了，請簽名。",en:"Clerk: One moment... Found it, please sign."},
+{zh:"顧客：可以當場打開檢查嗎？",en:"Customer: Can I open and check it here?"},
+{zh:"店員：可以。另外還需要影印嗎？",en:"Clerk: Yes. Need photocopying too?"},
+{zh:"顧客：對，這份文件影印兩張，黑白就好。",en:"Customer: Yes, two B&W copies of this."},
+{zh:"店員：好，在這邊。還要繳電話費嗎？",en:"Clerk: Okay. Paying phone bill too?"},
+{zh:"顧客：不用。水我自己拿。可以用載具嗎？",en:"Customer: No. I'll get water. Can I use the carrier?"},
+{zh:"店員：可以，請出示載具條碼。一共85元。",en:"Clerk: Yes, show the barcode. Total 85."},
+{zh:"顧客：行動支付，謝謝！",en:"Customer: Mobile payment, thanks!"}
+],
+grammar:[
+{title:"1. 請問可以……嗎？ (qǐngwèn kěyǐ... ma?)",desc:"<strong>使用原則：</strong>禮貌詢問是否允許。",example:"例句：<strong>請問可以</strong>當場打開檢查<strong>嗎</strong>？"},
+{title:"2. 另外還 + 動詞 (lìngwài hái...)",desc:"<strong>使用原則：</strong>補充詢問其他需求。",example:"例句：<strong>另外還</strong>需要影印嗎？"}
+],
+mindmap:"<strong>心智圖：【便利商店】</strong><br>取貨簽名 ➔ 檢查包裹 ➔ 影印 ➔ 載具與支付",
+vocab:[
+{zh:"取貨",pinyin:"qǔ huò",en:"pick up package",exp:"去拿網購的東西。"},
+{zh:"包裹",pinyin:"bāoguǒ",en:"package",exp:"寄來的紙箱或袋子。"},
+{zh:"條碼",pinyin:"tiáomǎ",en:"barcode",exp:"用來掃描的黑白線。"},
+{zh:"簽名",pinyin:"qiānmíng",en:"sign",exp:"寫自己的名字。"},
+{zh:"當場",pinyin:"dāngchǎng",en:"on the spot",exp:"在當下那個地方。"},
+{zh:"影印",pinyin:"yǐngyìn",en:"photocopy",exp:"複印文件。"},
+{zh:"繳",pinyin:"jiǎo",en:"pay (a bill)",exp:"付帳單。"},
+{zh:"載具",pinyin:"zàijù",en:"e-invoice carrier",exp:"存電子發票的手機條碼。"},
+{zh:"出示",pinyin:"chūshì",en:"show / present",exp:"拿出來給人看。"},
+{zh:"稍等",pinyin:"shāo děng",en:"wait a moment",exp:"請等一下。"}
+],
+questions:["1. 顧客取貨後還做了什麼？","2. 「當場打開檢查」是什麼意思？","3. 你常在便利商店做哪些事？"]},
+
+dine_stirfry:{title:"🍽 熱炒店聚餐 (TOCFL A2-B1)",
+dialogues:[
+{zh:"服務生：幾位？有訂位嗎？",en:"Waiter: How many? Reservation?"},
+{zh:"顧客：四位，沒訂位，有靠窗的位子嗎？",en:"Customer: Four, no reservation. Window table?"},
+{zh:"服務生：有，請跟我來。這是菜單。",en:"Waiter: Yes, follow me. Here's the menu."},
+{zh:"顧客：我們要宮保雞丁、魚香茄子、炒青菜，再四碗白飯。",en:"Customer: Kung Pao chicken, fish-flavored eggplant, greens, four rice."},
+{zh:"服務生：辣椒要正常還是少辣？",en:"Waiter: Regular or less spicy?"},
+{zh:"顧客：少辣，謝謝。可以先上湯嗎？",en:"Customer: Less spicy. Can soup come first?"},
+{zh:"服務生：好的。飲料呢？",en:"Waiter: Okay. Drinks?"},
+{zh:"顧客：兩杯冰開水、兩杯熱麥茶。",en:"Customer: Two ice waters, two hot barley teas."},
+{zh:"服務生：好，請稍等。",en:"Waiter: Okay, please wait."},
+{zh:"顧客：（吃完）麻煩結帳，可以分開付嗎？",en:"Customer: (after) Bill please, can we split?"}
+],
+grammar:[
+{title:"1. 麻煩 + 動詞 (máfan...)",desc:"<strong>使用原則：</strong>客氣請求，比「請」更口語。",example:"例句：<strong>麻煩</strong>結帳。"},
+{title:"2. 可以……嗎？ (kěyǐ... ma?)",desc:"<strong>使用原則：</strong>詢問是否可行。",example:"例句：<strong>可以</strong>分開付<strong>嗎</strong>？"}
+],
+mindmap:"<strong>心智圖：【熱炒店】</strong><br>入座 ➔ 點菜與口味 ➔ 飲料 ➔ 結帳方式",
+vocab:[
+{zh:"訂位",pinyin:"dìngwèi",en:"reservation",exp:"事先訂桌子。"},
+{zh:"靠窗",pinyin:"kào chuāng",en:"by the window",exp:"位子在窗戶邊。"},
+{zh:"宮保雞丁",pinyin:"gōngbǎo jīdīng",en:"Kung Pao chicken",exp:"有名的炒雞丁。"},
+{zh:"魚香茄子",pinyin:"yúxiāng qiézi",en:"fish-flavored eggplant",exp:"魚香醬炒的茄子。"},
+{zh:"少辣",pinyin:"shǎo là",en:"less spicy",exp:"辣椒少一點。"},
+{zh:"上菜",pinyin:"shàng cài",en:"serve dishes",exp:"把菜端上來。"},
+{zh:"麥茶",pinyin:"màichá",en:"barley tea",exp:"用大麥煮的茶。"},
+{zh:"結帳",pinyin:"jiézhàng",en:"pay the bill",exp:"付錢。"},
+{zh:"分開付",pinyin:"fēnkāi fù",en:"split the bill",exp:"各付各的。"},
+{zh:"菜單",pinyin:"càidān",en:"menu",exp:"列菜名的本子。"}
+],
+questions:["1. 顧客點了哪三道菜？","2. 「分開付」是什麼意思？","3. 你和朋友聚餐通常怎麼付錢？"]},
+
+trans_taxi:{title:"🚗 搭乘計程車 (TOCFL A2-B1)",
+dialogues:[
+{zh:"司機：你好，要去哪裡？",en:"Driver: Hello, where to?"},
+{zh:"乘客：麻煩到台北車站，謝謝。",en:"Passenger: Taipei Main Station, please."},
+{zh:"司機：好。現在有點塞，大概三十分鐘。",en:"Driver: Okay. A bit congested, about 30 minutes."},
+{zh:"乘客：沒關係。可以走地下道那條路嗎？比較快。",en:"Passenger: No problem. Underpass route? Faster."},
+{zh:"司機：可以。要開冷氣嗎？",en:"Driver: Sure. A/C on?"},
+{zh:"乘客：好，謝謝。到了請從東三門。",en:"Passenger: Yes. Drop me at East Exit 3."},
+{zh:"司機：好的。您是觀光還是出差？",en:"Driver: Okay. Sightseeing or business?"},
+{zh:"乘客：來念書的。到了嗎？",en:"Passenger: Studying here. Are we there?"},
+{zh:"司機：到了，一共250元。要發票嗎？",en:"Driver: Here, 250 NTD. Need receipt?"},
+{zh:"乘客：要，謝謝。這裡300，不用找了。",en:"Passenger: Yes. Here's 300, keep the change."}
+],
+grammar:[
+{title:"1. 麻煩到 + 地點 (máfan dào...)",desc:"<strong>使用原則：</strong>跟司機說目的地的禮貌說法。",example:"例句：<strong>麻煩到</strong>台北車站。"},
+{title:"2. 不用找了 (búyòng zhǎo le)",desc:"<strong>使用原則：</strong>付錢時表示不用找零，當作小費。",example:"例句：這裡300，<strong>不用找了</strong>。"}
+],
+mindmap:"<strong>心智圖：【搭計程車】</strong><br>告知目的地 ➔ 指定路線 ➔ 車上閒聊 ➔ 發票與小費",
+vocab:[
+{zh:"塞",pinyin:"sāi",en:"congested",exp:"車多、走不動。"},
+{zh:"地下道",pinyin:"dìxiàdào",en:"underpass",exp:"地下通道。"},
+{zh:"冷氣",pinyin:"lěngqì",en:"air-conditioning",exp:"車上的空調。"},
+{zh:"出口",pinyin:"chūkǒu",en:"exit",exp:"離開的門。"},
+{zh:"觀光",pinyin:"guānguāng",en:"sightseeing",exp:"遊覽。"},
+{zh:"出差",pinyin:"chūchāi",en:"business trip",exp:"因工作外出。"},
+{zh:"發票",pinyin:"fāpiào",en:"receipt",exp:"付錢後的單據。"},
+{zh:"不用找了",pinyin:"búyòng zhǎo le",en:"keep the change",exp:"不用找零。"},
+{zh:"麻煩",pinyin:"máfan",en:"please (polite)",exp:"客氣地請求。"},
+{zh:"大概",pinyin:"dàgài",en:"about",exp:"大約。"}
+],
+questions:["1. 乘客要求走哪一條路？","2. 「不用找了」代表什麼？","3. 你搭計程車時會跟司機聊天嗎？"]},
+
+work_teabar:{title:"💼 辦公室茶水間 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：早安！昨天加班到幾點？",en:"A: Morning! Overtime until when?"},
+{zh:"B：快十一點，專案真的很趕。",en:"B: Almost 11. Project is urgent."},
+{zh:"A：辛苦了。週末有什麼計畫嗎？",en:"A: You've worked hard. Weekend plans?"},
+{zh:"B：想去爬山，你要不要一起？",en:"B: Thinking of hiking. Join?"},
+{zh:"A：好啊！對了，聽說小王下個月要離職？",en:"A: Sure! Xiao Wang resigning next month?"},
+{zh:"B：真的假的？我還沒聽說。",en:"B: Really? I haven't heard."},
+{zh:"A：好像是找到更好的機會。中午一起吃飯嗎？",en:"A: Seems better opportunity. Lunch?"},
+{zh:"B：好，十二點樓下見。下午有會議記得帶資料。",en:"B: Okay, downstairs at 12. Bring docs for meeting."},
+{zh:"A：好，謝謝提醒。咖啡要喝嗎？我泡。",en:"A: Okay, thanks. Coffee? I'll make it."},
+{zh:"B：好啊，謝謝！",en:"B: Yes, thanks!"}
+],
+grammar:[
+{title:"1. 對了，…… (duì le...)",desc:"<strong>使用原則：</strong>突然想起某事或轉換話題。",example:"例句：<strong>對了</strong>，聽說小王要離職？"},
+{title:"2. 真的假的？ (zhēn de jiǎ de?)",desc:"<strong>使用原則：</strong>表示驚訝、想確認是不是真的。",example:"例句：<strong>真的假的</strong>？我還沒聽說。"}
+],
+mindmap:"<strong>心智圖：【茶水間閒聊】</strong><br>加班寒暄 ➔ 週末計畫 ➔ 公司八卦 ➔ 約午餐與提醒",
+vocab:[
+{zh:"加班",pinyin:"jiābān",en:"work overtime",exp:"超過下班時間還在工作。"},
+{zh:"專案",pinyin:"zhuān'àn",en:"project",exp:"一個工作項目。"},
+{zh:"很趕",pinyin:"hěn gǎn",en:"very urgent",exp:"時間很緊。"},
+{zh:"辛苦了",pinyin:"xīnkǔ le",en:"you've worked hard",exp:"慰勞別人的話。"},
+{zh:"離職",pinyin:"lízhí",en:"resign",exp:"離開公司。"},
+{zh:"聽說",pinyin:"tīngshuō",en:"I heard that",exp:"從別人那裡知道。"},
+{zh:"會議",pinyin:"huìyì",en:"meeting",exp:"正式討論場合。"},
+{zh:"資料",pinyin:"zīliào",en:"documents",exp:"文件、報告。"},
+{zh:"提醒",pinyin:"tíxǐng",en:"remind",exp:"讓人不要忘記。"},
+{zh:"泡咖啡",pinyin:"pào kāfēi",en:"make coffee",exp:"沖泡咖啡。"}
+],
+questions:["1. B 週末想做什麼？","2. 「真的假的？」用在什麼情況？","3. 你和同事最常聊什麼？"]},
+
+work_leave:{title:"💼 向主管請假 (TOCFL A2-B1)",
+dialogues:[
+{zh:"員工：主管，不好意思，想跟您請兩天假。",en:"Employee: Manager, I'd like two days off."},
+{zh:"主管：什麼時候？什麼原因？",en:"Manager: When? Reason?"},
+{zh:"員工：下週三四，家裡有點事要處理。",en:"Employee: Next Wed-Thu, family matters."},
+{zh:"主管：手上的報告呢？",en:"Manager: What about the report?"},
+{zh:"員工：我會在週二前完成，並交接給小李。",en:"Employee: Finish by Tuesday and hand to Xiao Li."},
+{zh:"主管：好，那把請假單填一填。",en:"Manager: Okay, fill the leave form."},
+{zh:"員工：已經填好了，請您簽一下。",en:"Employee: Already filled, please sign."},
+{zh:"主管：嗯，可以。回來後把進度補一下。",en:"Manager: Okay. Catch up after you return."},
+{zh:"員工：一定，謝謝主管！造成不便請多包涵。",en:"Employee: Definitely, thanks! Sorry for the inconvenience."},
+{zh:"主管：沒關係，家庭重要，去吧。",en:"Manager: No problem, family first. Go ahead."}
+],
+grammar:[
+{title:"1. 想跟您 + 動詞 (xiǎng gēn nín...)",desc:"<strong>使用原則：</strong>對長輩或主管客氣地表達意圖。",example:"例句：<strong>想跟您</strong>請兩天假。"},
+{title:"2. 請多包涵 (qǐng duō bāohán)",desc:"<strong>使用原則：</strong>造成麻煩時的客氣道歉。",example:"例句：造成不便，<strong>請多包涵</strong>。"}
+],
+mindmap:"<strong>心智圖：【請假】</strong><br>提出請假 ➔ 說明原因 ➔ 工作交接 ➔ 填單簽名",
+vocab:[
+{zh:"請假",pinyin:"qǐngjià",en:"ask for leave",exp:"向公司申請不上班。"},
+{zh:"主管",pinyin:"zhǔguǎn",en:"manager",exp:"負責管理的人。"},
+{zh:"交接",pinyin:"jiāojiē",en:"hand over",exp:"把工作交給別人。"},
+{zh:"請假單",pinyin:"qǐngjià dān",en:"leave form",exp:"請假要填的表格。"},
+{zh:"簽名",pinyin:"qiānmíng",en:"sign",exp:"寫名字表示同意。"},
+{zh:"進度",pinyin:"jìndù",en:"progress",exp:"工作進行的程度。"},
+{zh:"包涵",pinyin:"bāohán",en:"forgive",exp:"請對方原諒。"},
+{zh:"不便",pinyin:"búbiàn",en:"inconvenience",exp:"麻煩別人。"},
+{zh:"家庭",pinyin:"jiātíng",en:"family",exp:"家人相關的事。"},
+{zh:"處理",pinyin:"chǔlǐ",en:"handle",exp:"解決事情。"}
+],
+questions:["1. 員工請幾天假？什麼時候？","2. 請假前他做了什麼準備？","3. 你請假時會怎麼跟主管說？"]},
+
+med_clinic:{title:"🏥 診所看醫生 (TOCFL A2-B1)",
+dialogues:[
+{zh:"護理師：您好，哪裡不舒服？",en:"Nurse: Hello, where do you feel unwell?"},
+{zh:"病人：昨天開始發燒，還有咳嗽、流鼻水。",en:"Patient: Fever since yesterday, plus cough and runny nose."},
+{zh:"護理師：好，先量體溫……38.1度，請到診間等。",en:"Nurse: Temperature first... 38.1°C. Wait in consultation room."},
+{zh:"醫生：症狀持續多久了？有沒有全身痠痛？",en:"Doctor: How long? Any body aches?"},
+{zh:"病人：兩天了，頭有點痛，食慾也不好。",en:"Patient: Two days. Slight headache, poor appetite."},
+{zh:"醫生：我聽一下呼吸。深呼吸……應該是感冒。",en:"Doctor: Listen to breathing. Deep breath... It's a cold."},
+{zh:"病人：需要吃藥嗎？會不會想睡覺？",en:"Patient: Need medicine? Will it make me sleepy?"},
+{zh:"醫生：開三天的藥，白天那個比較不會想睡。多休息、多喝水。",en:"Doctor: Three days' medicine. Daytime one less drowsy. Rest and drink water."},
+{zh:"病人：好的。需要請假嗎？",en:"Patient: Okay. Should I take leave?"},
+{zh:"醫生：建議休息兩天。早日康復！",en:"Doctor: Suggest two days' rest. Get well soon!"}
+],
+grammar:[
+{title:"1. 哪裡不舒服？ (nǎlǐ bù shūfu?)",desc:"<strong>使用原則：</strong>醫護人員詢問病情的標準開場。",example:"例句：您好，<strong>哪裡不舒服</strong>？"},
+{title:"2. 建議 + 動詞 (jiànyì...)",desc:"<strong>使用原則：</strong>提出專業建議。",example:"例句：我<strong>建議</strong>休息兩天。"}
+],
+mindmap:"<strong>心智圖：【看醫生】</strong><br>描述症狀 ➔ 量體溫聽診 ➔ 診斷開藥 ➔ 醫囑休息",
+vocab:[
+{zh:"發燒",pinyin:"fāshāo",en:"have a fever",exp:"體溫升高。"},
+{zh:"咳嗽",pinyin:"késòu",en:"cough",exp:"喉嚨不舒服會咳。"},
+{zh:"流鼻水",pinyin:"liú bíshuǐ",en:"runny nose",exp:"鼻子一直流水。"},
+{zh:"體溫",pinyin:"tǐwēn",en:"body temperature",exp:"身體的溫度。"},
+{zh:"症狀",pinyin:"zhèngzhuàng",en:"symptom",exp:"生病的表現。"},
+{zh:"食慾",pinyin:"shíyù",en:"appetite",exp:"想吃東西的感覺。"},
+{zh:"感冒",pinyin:"gǎnmào",en:"cold",exp:"常見的小病。"},
+{zh:"副作用",pinyin:"fùzuòyòng",en:"side effect",exp:"藥的不良反應。"},
+{zh:"早日康復",pinyin:"zǎorì kāngfù",en:"get well soon",exp:"祝福快點好起來。"},
+{zh:"深呼吸",pinyin:"shēn hūxī",en:"deep breath",exp:"用力吸氣。"}
+],
+questions:["1. 病人的體溫是多少？醫生說是什麼病？","2. 醫生建議怎麼做？","3. 你感冒時通常會怎麼跟醫生說？"]},
+
+ent_ktv:{title:"🎤 KTV唱歌 (TOCFL A2-B1)",
+dialogues:[
+{zh:"A：這首我點！大家一起唱好不好？",en:"A: I'll pick this one! Sing together?"},
+{zh:"B：好啊，我幫你在點歌機找。",en:"B: Sure, I'll find it on the machine."},
+{zh:"A：找到了嗎？可不可以插播？下一首輪到我。",en:"A: Found it? Can you insert it? I'm next."},
+{zh:"B：可以，已插播。你要麥嗎？",en:"B: Done. Want the mic?"},
+{zh:"A：要！音量可以再大一點嗎？",en:"A: Yes! Volume up a bit?"},
+{zh:"C：我來調。要不要加鈴聲？",en:"C: I'll adjust. Want reverb?"},
+{zh:"A：好，謝謝。這首歌超經典的。",en:"A: Yes, thanks. Super classic song."},
+{zh:"B：對啊，合唱的部分我接副歌。",en:"B: Yeah, I'll take the chorus."},
+{zh:"A：完美！唱完點什麼吃的？薯條可以嗎？",en:"A: Perfect! Order food after? Fries okay?"},
+{zh:"C：可以，我叫服務生來。大家玩得開心！",en:"C: Sure, I'll call staff. Have fun!"}
+],
+grammar:[
+{title:"1. 可不可以 + 動詞？ (kě bu kěyǐ...)",desc:"<strong>使用原則：</strong>口語詢問許可，比「可以嗎」更軟。",example:"例句：<strong>可不可以</strong>插播？"},
+{title:"2. 超 + 形容詞 (chāo...)",desc:"<strong>使用原則：</strong>年輕人強調語氣。",example:"例句：這首歌<strong>超</strong>經典的。"}
+],
+mindmap:"<strong>心智圖：【KTV】</strong><br>點歌 ➔ 插播排隊 ➔ 調音量 ➔ 合唱與點餐",
+vocab:[
+{zh:"點歌",pinyin:"diǎn gē",en:"request a song",exp:"選要唱的歌。"},
+{zh:"點歌機",pinyin:"diǎngējī",en:"song machine",exp:"KTV裡選歌的機器。"},
+{zh:"插播",pinyin:"chābò",en:"insert song",exp:"把歌插到前面。"},
+{zh:"麥",pinyin:"mài",en:"microphone",exp:"麥克風的簡稱。"},
+{zh:"音量",pinyin:"yīnliàng",en:"volume",exp:"聲音大小。"},
+{zh:"鈴聲",pinyin:"língshēng",en:"reverb",exp:"KTV的殘響效果。"},
+{zh:"副歌",pinyin:"fùgē",en:"chorus",exp:"歌曲重複的主要部分。"},
+{zh:"合唱",pinyin:"héchàng",en:"sing together",exp:"兩人以上一起唱。"},
+{zh:"經典",pinyin:"jīngdiǎn",en:"classic",exp:"很有名、大家都會的。"},
+{zh:"服務生",pinyin:"fúwùshēng",en:"staff",exp:"來點餐的人。"}
+],
+questions:["1. 「插播」是什麼意思？","2. 他們唱完後想吃什麼？","3. 你去KTV最常唱什麼類型的歌？"]},
+
+ent_cinema:{title:"🎬 電影院買票 (TOCFL A2-B1)",
+dialogues:[
+{zh:"店員：您好，要看哪一部？",en:"Clerk: Hello, which movie?"},
+{zh:"顧客：最新的那部動作片，今天下午的場次。",en:"Customer: Latest action movie, afternoon show."},
+{zh:"店員：兩點十的還有位子，要幾張？",en:"Clerk: 2:10 still has seats. How many?"},
+{zh:"顧客：兩張。有沒有中間比較好的座位？",en:"Customer: Two. Good seats in the middle?"},
+{zh:"店員：有，H排 12、13 可以嗎？",en:"Clerk: Yes, H12 and H13 okay?"},
+{zh:"顧客：好。可以搭爆米花套餐嗎？",en:"Customer: Yes. Popcorn combo?"},
+{zh:"店員：可以，中杯可樂加爆米花一共加80元。",en:"Clerk: Sure, medium cola + popcorn adds 80."},
+{zh:"顧客：好，兩套。學生證有優惠嗎？",en:"Customer: Okay, two sets. Student discount?"},
+{zh:"店員：有，票價各折50。一共480元。",en:"Clerk: Yes, 50 off each. Total 480."},
+{zh:"顧客：行動支付，謝謝！",en:"Customer: Mobile payment, thanks!"}
+],
+grammar:[
+{title:"1. 有沒有 + 名詞？ (yǒu méi yǒu...)",desc:"<strong>使用原則：</strong>詢問是否有某樣東西。",example:"例句：<strong>有沒有</strong>中間比較好的座位？"},
+{title:"2. 可以搭 + 名詞嗎？ (kěyǐ dā... ma?)",desc:"<strong>使用原則：</strong>詢問能否加購套餐。",example:"例句：<strong>可以搭</strong>爆米花套餐<strong>嗎</strong>？"}
+],
+mindmap:"<strong>心智圖：【電影院】</strong><br>選電影場次 ➔ 選座位 ➔ 套餐加購 ➔ 學生優惠",
+vocab:[
+{zh:"場次",pinyin:"chǎngcì",en:"showtime",exp:"電影播放的時間。"},
+{zh:"位子",pinyin:"wèizi",en:"seat",exp:"座位。"},
+{zh:"動作片",pinyin:"dòngzuò piàn",en:"action movie",exp:"有很多打鬥的電影。"},
+{zh:"套餐",pinyin:"tàocān",en:"combo",exp:"組合優惠。"},
+{zh:"爆米花",pinyin:"bàomǐhuā",en:"popcorn",exp:"電影院常見零食。"},
+{zh:"學生證",pinyin:"xuéshēngzhèng",en:"student ID",exp:"證明學生身分的卡片。"},
+{zh:"優惠",pinyin:"yōuhuì",en:"discount",exp:"比較便宜的價格。"},
+{zh:"折",pinyin:"zhé",en:"off (amount)",exp:"少收的錢。"},
+{zh:"中間",pinyin:"zhōngjiān",en:"middle",exp:"中央的位置。"},
+{zh:"最新",pinyin:"zuìxīn",en:"latest",exp:"最近上映的。"}
+],
+questions:["1. 顧客選了什麼時間的場次？","2. 學生證有什麼優惠？","3. 你看電影時會點套餐嗎？"]}
+};
+
+let currentMain = "shopping";
+let currentData = null;
+
+function selectMain(mainKey, el) {
+    currentMain = mainKey;
+    document.querySelectorAll(".scene-tag").forEach(t => t.classList.remove("active"));
+    if (el) el.classList.add("active");
+    else {
+        const t = document.querySelector(`.scene-tag[data-main="${mainKey}"]`);
+        if (t) t.classList.add("active");
+    }
+    const cat = mainCategories[mainKey];
+    const subNav = document.getElementById("subNav");
+    const subTags = document.getElementById("subTags");
+    const subTitle = document.getElementById("subTitle");
+    subNav.classList.add("show");
+    subTitle.textContent = cat.label + " — 請選擇子場景：";
+    subTags.innerHTML = "";
+    cat.subs.forEach((s, idx) => {
+        const span = document.createElement("span");
+        span.className = "sub-tag" + (idx === 0 ? " active" : "");
+        span.textContent = s.label;
+        span.onclick = function () { selectSub(s.key, this); };
+        subTags.appendChild(span);
+    });
+    if (cat.subs.length) selectSub(cat.subs[0].key);
+}
+
+function selectSub(key, el) {
+    document.querySelectorAll(".sub-tag").forEach(t => t.classList.remove("active"));
+    if (el) el.classList.add("active");
+    if (modules[key]) loadModule(modules[key]);
+    else showComingSoon(key);
+}
+
+function loadModule(data) {
+    currentData = data;
+    document.getElementById("moduleTitle").textContent = data.title;
+    const dialogueList = document.getElementById("dialogueList");
+    dialogueList.innerHTML = "";
+    data.dialogues.forEach(d => {
+        const div = document.createElement("div");
+        div.className = "dialogue-item";
+        const safe = d.zh.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+        div.innerHTML = `<div class="dialogue-zh" onclick="speakText('${safe}')"><span>${d.zh}</span><span style="color:var(--primary);font-size:0.9rem;">🔊</span></div><div class="dialogue-en">${d.en}</div>`;
+        dialogueList.appendChild(div);
+    });
+    const grammarList = document.getElementById("grammarList");
+    grammarList.innerHTML = "";
+    data.grammar.forEach(g => {
+        const div = document.createElement("div");
+        div.className = "grammar-box";
+        div.innerHTML = `<div style="font-weight:bold;color:var(--accent);font-size:1.02rem;margin-bottom:4px;">${g.title}</div><div>${g.desc}</div><div style="color:var(--text-sub);font-size:0.88rem;margin-top:4px;">${g.example}</div>`;
+        grammarList.appendChild(div);
+    });
+    document.getElementById("mindmapNote").innerHTML = data.mindmap;
+    const vocabGrid = document.getElementById("vocabGrid");
+    vocabGrid.innerHTML = "";
+    data.vocab.forEach(v => {
+        const div = document.createElement("div");
+        div.className = "vocab-card";
+        div.onclick = () => speakText(v.zh);
+        div.innerHTML = `<div class="vocab-zh">${v.zh} 🔊</div><div class="vocab-pinyin">${v.pinyin}</div><div class="vocab-en">${v.en}</div>`;
+        vocabGrid.appendChild(div);
+    });
+    const quizList = document.getElementById("quizList");
+    quizList.innerHTML = "";
+    data.questions.forEach(q => {
+        const div = document.createElement("div");
+        div.className = "q-box";
+        const safeQ = q.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+        div.innerHTML = `<div style="font-weight:bold;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;"><span>${q}</span><button class="btn" style="padding:2px 8px;font-size:0.78rem;flex-shrink:0;" onclick="speakText('${safeQ}')">🔊 聽題目</button></div><input type="text" placeholder="請用中文寫下答案...">`;
+        quizList.appendChild(div);
+    });
+    document.getElementById("btnFullDialogue").style.display = "inline-flex";
+    document.getElementById("btnVocab").style.display = "inline-flex";
+}
+
+function showComingSoon(key) {
+    currentData = null;
+    document.getElementById("moduleTitle").textContent = "內容準備中";
+    document.getElementById("dialogueList").innerHTML = `<div class="coming-soon"><strong>🚧 此子場景內容開發中</strong>目前已完成多個代表性場景，其餘將陸續補上。<br>請先練習其他已開放的子場景！</div>`;
+    document.getElementById("grammarList").innerHTML = "";
+    document.getElementById("mindmapNote").innerHTML = "";
+    document.getElementById("vocabGrid").innerHTML = "";
+    document.getElementById("quizList").innerHTML = "";
+    document.getElementById("btnFullDialogue").style.display = "none";
+    document.getElementById("btnVocab").style.display = "none";
+}
+
+function speakText(text) {
+    if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = "zh-TW";
+        u.rate = 0.85;
+        window.speechSynthesis.speak(u);
+    } else {
+        alert("您的瀏覽器不支援語音朗讀");
+    }
+}
+
+function speakFullDialogue() {
+    if (!currentData) return;
+    let t = currentData.title + "。對話開始：\n";
+    currentData.dialogues.forEach(d => { t += d.zh + "\n"; });
+    speakText(t);
+}
+
+function speakVocabExplanation() {
+    if (!currentData) return;
+    let t = "現在解說生詞用法：\n";
+    currentData.vocab.forEach((v, i) => { t += `第${i + 1}個，${v.zh}。${v.exp}\n`; });
+    speakText(t);
+}
+
+window.onload = () => { selectMain("shopping"); };
+</script>
+</body>
+</html>
